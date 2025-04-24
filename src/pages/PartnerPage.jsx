@@ -67,7 +67,6 @@ const PartnerPage = () => {
                                     <p>
                                         <a href={`https://2gis.kg/search/${encodeURIComponent(item.city + ' ' + item.address)}`} target='_blank'><span>📍</span> {item.city}, {item.address}</a>
                                     </p>
-                                    {/* <p><span>{DICTIONARY[lang].shortRoomCount}:</span> {item.count}</p> */}
                                     {/* <p><span>📞</span> {item.phone}</p> */}
 
                                     <div className="card-prices">
