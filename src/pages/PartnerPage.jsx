@@ -4,7 +4,6 @@ import WebApp from '@twa-dev/sdk';
 
 import ImageSlider from "../components/ImageSlider";
 import SingleAdvertisement from './SingleAdvertisement';
-// import RecentDays from "../components/RecentDays";
 
 import { api } from "../api";
 import { DICTIONARY } from './CreateAdvertisement';
