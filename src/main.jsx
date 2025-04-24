@@ -15,23 +15,23 @@ WebApp.ready();
 
 const router = createBrowserRouter([
   {
-    path: "/dom24/",
+    path: "/tourbaza/",
     element: <App />,
     children: [
       {
-        path: "/dom24/",
+        path: "/tourbaza/",
         element: <CreateAdvertisement />,
       },
       {
-        path: "/dom24/my-houses",
+        path: "/tourbaza/my-houses",
         element: <OwnerAdvertisementsList />,
       },
       {
-        path: "/dom24/search",
+        path: "/tourbaza/search",
         element: <UserSearchPage />,
       },
       {
-        path: "/dom24/partner",
+        path: "/tourbaza/partner",
         element: <PartnerPage />
       }
     ],
