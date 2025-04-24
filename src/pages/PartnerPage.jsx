@@ -28,7 +28,6 @@ const PartnerPage = () => {
                 if (res.data.length === 1) {
                     setActiveDoc(res.data[0])
                 }
- 
                 console.log(res.data);
             }
         })
