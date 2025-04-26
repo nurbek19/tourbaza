@@ -166,6 +166,18 @@ function CreateAdvertisement() {
         <input type="number" id="count" className="text-field" value={count} onChange={(e) => setCount(e.target.value)} />
       </div>
 
+      <div className="field-wrapper">
+        <label htmlFor="description" className="field-label">Описание</label>
+
+        <textarea id="description" rows="6" className="text-field" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+      </div>
+
+      <div className="field-wrapper">
+        <label htmlFor="location" className="field-label">Место сбора</label>
+
+        <textarea id="location" rows="3" className="text-field" value={location} onChange={(e) => setLocation(e.target.value)}></textarea>
+      </div>
+
       <div className="field-wrapper select-wrapper">
         <label htmlFor="tour-duration" className="field-label">Длительность</label>
 
@@ -194,18 +206,6 @@ function CreateAdvertisement() {
             <option key={v} value={v}>{v}</option>
           ))}
         </select>
-      </div>
-
-      <div className="field-wrapper">
-        <label htmlFor="description" className="field-label">Описание</label>
-
-        <textarea id="description" rows="6" className="text-field" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-      </div>
-
-      <div className="field-wrapper">
-        <label htmlFor="location" className="field-label">Место сбора</label>
-
-        <textarea id="location" rows="3" className="text-field" value={location} onChange={(e) => setLocation(e.target.value)}></textarea>
       </div>
 
       <button onClick={onSendData}>btn</button>

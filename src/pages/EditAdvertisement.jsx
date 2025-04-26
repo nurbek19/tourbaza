@@ -133,59 +133,54 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     //   }
     // }
 
-    let selectedDays = doc.books;
+    // let selectedDays = doc.books;
 
-    if (selected.length) {
-      const booksCopy = { ...doc.books };
+    // if (selected.length) {
+    //   const booksCopy = { ...doc.books };
 
-      const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
+    //   const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
 
-      houses.forEach((value) => {
-        booksCopy[value] = [...booksCopy[value], ...selectedDates];
-      });
+    //   houses.forEach((value) => {
+    //     booksCopy[value] = [...booksCopy[value], ...selectedDates];
+    //   });
 
 
-      selectedDays = booksCopy;
-    }
+    //   selectedDays = booksCopy;
+    // }
 
     const payload = {
-      // city,
-      // address,
-      // phone,
-      // count: parseInt(count),
-      // prepayment_sum: prepayment,
-      // mbank_link: paymentLink,
-      // price: pricesObj,
-      // name,
-      // house_type: houseType,
-      // finik_account_id: paymentId,
-      // description,
-      // books: selectedDays
+      name,
+      price: parseInt(price),
+      people_limit: parseInt(count),
+      duration_in_days: parseInt(tourDuration),
+      tour_type: tourType,
+      difficulty,
+      description,
+      location,
+
+      availableDates: selected,
     };
 
     const docObj = {
-      // city: doc.city,
-      // address: doc.address,
-      // phone: doc.phone,
-      // prepayment_sum: doc.prepayment_sum,
-      // mbank_link: doc.mbank_link,
-      // // count: parseInt(doc.count),
-      // price: doc.price,
-      // name: doc.name ? doc.name : '',
-      // house_type: doc.house_type,
-      // finik_account_id: doc.finik_account_id,
-      // description: doc.description,
-      // books: doc.books ? doc.books : {}
+      name: doc.name,
+      price: parseInt(doc.price),
+      people_limit: parseInt(doc.people_limit),
+      duration_in_days: doc.duration_in_days,
+      tour_type: doc.tour_type,
+      difficulty: doc.difficulty,
+      description: doc.description,
+      location: doc.location,
+      availableDates: doc.availableDates,
     }
 
     const isObjectChanged = deepEqual(payload, docObj);
 
-    if (calendarType === 'delete') {
-      return (name && !isObjectChanged) || houses.length; // кейс когда одна бронь и пытаются удалить бронь
-    }
+    // if (calendarType === 'delete') {
+    //   return (name && !isObjectChanged) || houses.length; // кейс когда одна бронь и пытаются удалить бронь
+    // }
 
-    return (name && !isObjectChanged) || (houses.length && selected.length);
-  }, [price, name, selected, doc, houses, calendarType, description]);
+    return (name && price && count && tourDuration && tourType && difficulty && description && location && !isObjectChanged) || selected.length;
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location, selected, doc]);
 
   useEffect(() => {
     WebApp.onEvent('mainButtonClicked', onSendData);
