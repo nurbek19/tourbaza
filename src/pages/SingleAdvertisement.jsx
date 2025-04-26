@@ -279,7 +279,10 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                         mode="single"
                         selected={selected}
                         onSelect={handleSelect}
-                        disabled={[{ before: new Date() }, ...bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))]}
+                        disabled={[
+                            { before: new Date() },
+                            // ...bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))
+                        ]}
                     // modifiers={{
                     //     booked: bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))
                     // }}
