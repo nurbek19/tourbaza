@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
 import './Drawer.css';
 
-export function BottomDrawer({ isOpen, onClose, handleSelect, children }) {
+export function BottomDrawer({ isOpen, onClose, children }) {
   const y = useMotionValue(0);
 
   // Close if dragged down past threshold
   const handleDragEnd = (_, info) => {
     const shouldClose = info.velocity.y > 500 || info.point.y > window.innerHeight * 0.4;
     if (shouldClose) {
-        handleSelect([]);
+        // handleSelect([]);
         onClose();
     };
   };
@@ -31,7 +31,7 @@ export function BottomDrawer({ isOpen, onClose, handleSelect, children }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => {
-                handleSelect([]);
+                // handleSelect([]);
                 onClose();
             }}
           />

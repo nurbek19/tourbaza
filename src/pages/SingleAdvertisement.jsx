@@ -1,5 +1,4 @@
 import { useMemo, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import WebApp from '@twa-dev/sdk';
 import { DayPicker } from "react-day-picker";
 import { format, isAfter, sub } from "date-fns";
@@ -11,11 +10,7 @@ import '../App.css';
 
 import { DICTIONARY } from './CreateAdvertisement';
 import clsx from 'clsx';
-import HouseItem from '../components/HouseItem';
 import logo from '../images/booklink.png';
-import gis from '../images/2gis.png';
-import noPartner from '../images/icon-no-partner.svg';
-import checkIcon from '../images/check-icon.png';
 
 import { BottomDrawer } from './BottomDrawer';
 import { ExpandableText } from './ExpandableText';
@@ -23,7 +18,7 @@ import { ExpandableText } from './ExpandableText';
 const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     const [show, setShow] = useState(false);
     const [showText, setShowText] = useState(false);
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState();
     const [searchParams] = useSearchParams();
     const [name, setName] = useState('');
     const [houses, setHouses] = useState([]);
@@ -31,10 +26,10 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     const [phone, setPhone] = useState('');
     const [open, setOpen] = useState(false);
 
-    const copyHandler = () => {
-        navigator.clipboard.writeText(item.phone);
-        setShowText(true);
-    }
+    // const copyHandler = () => {
+    //     navigator.clipboard.writeText(item.phone);
+    //     setShowText(true);
+    // }
 
     const bookedDays = useMemo(() => {
         if (!item.books) {
@@ -55,37 +50,37 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
         }
 
 
-        const commonDates = Object.values(item.books).map((arr) => (arr.map((el) => el.book_date)));
+        // const commonDates = Object.values(item.books).map((arr) => (arr.map((el) => el.book_date)));
 
-        if (commonDates.length === 0) {
-            return [];
-        }
+        // if (commonDates.length === 0) {
+        //     return [];
+        // }
 
-        return commonDates.reduce((acc, arr) => acc.filter(el => arr.includes(el))).map(date => new Date(date));
+        // return commonDates.reduce((acc, arr) => acc.filter(el => arr.includes(el))).map(date => new Date(date));
 
     }, [item.books, houses]);
 
 
-    const housesList = useMemo(() => {
-        if (!item.books) {
-            return [];
-        }
+    // const housesList = useMemo(() => {
+    //     if (!item.books) {
+    //         return [];
+    //     }
 
-        if (selected.length) {
-            const arr = [];
-            const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
+    //     if (selected.length) {
+    //         const arr = [];
+    //         const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
 
-            Object.keys(item.books).forEach((key) => {
-                const disabled = selectedDates.some((d) => item.books[key].map((obj) => (obj.book_date)).includes(d));
+    //         Object.keys(item.books).forEach((key) => {
+    //             const disabled = selectedDates.some((d) => item.books[key].map((obj) => (obj.book_date)).includes(d));
 
-                arr.push({ number: key, disabled });
-            });
+    //             arr.push({ number: key, disabled });
+    //         });
 
-            return arr;
-        }
+    //         return arr;
+    //     }
 
-        return Object.keys(item.books).map((v) => ({ number: v, disabled: false }));
-    }, [item.books, selected])
+    //     return Object.keys(item.books).map((v) => ({ number: v, disabled: false }));
+    // }, [item.books, selected])
 
     const onSendData = () => {
         const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
@@ -110,9 +105,9 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     }
 
     useEffect(() => {
-        if (item.count === 1) {
-            setHouses([1]);
-        }
+        // if (item.count === 1) {
+        setHouses([1]);
+        // }
     }, [])
 
     useEffect(() => {
@@ -143,45 +138,41 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     }, [isValid]);
 
     const handleSelect = (newSelected) => {
-        if (!item.mbank_link && !item.finik_account_id) {
-            setOpen(true);
-        }
+        // if (!item.mbank_link && !item.finik_account_id) {
+        //     setOpen(true);
+        // }
+        // e.stopPropagation();
 
-        setSelected(newSelected);
+
+
+        setSelected(newSelected, 'sdafasfd');
     };
+
+    console.log(selected, 'dsafasdfasdf');
+
 
     return (
         <div className='search-container'>
             {!hideButton && (<div className="back-button" onClick={onBackHandler}>« {DICTIONARY[lang].back}</div>)}
-            <div className={clsx('single-result-card', { 'card-padding': selected.length && houses.length })}>
+            <div className={clsx('single-result-card', { 'card-padding': selected })}>
                 <div className="">
                     <div className="single-card">
-                        {item.photo_ids && !byLink && (
+                        {item.photo_ids && (
                             <ImageSlider imageIds={item.photo_ids} />
                         )}
                         <div className="card-detail single-card-detail">
-                            {item.house_type && (
-                                <div className='house-type'>
-                                    {item.house_type}
-                                </div>
-                            )}
-
-                            {<p className="bold-title">
+                            <p className="bold-title">
                                 {item.name}
-
-                                {(item.mbank_link || item.finik_account_id) && (
-                                    <img src={checkIcon} alt="check icon" />
-                                )}
-                            </p>}
-                            {!byLink && <p><span>{DICTIONARY[lang].city}:</span> {item.city}</p>}
-                            {!byLink && <p className='address-link-wrapper'><span>{DICTIONARY[lang].address}: </span>
+                            </p>
+                            {/* {!byLink && <p><span>{DICTIONARY[lang].city}:</span> {item.city}</p>} */}
+                            {/* {!byLink && <p className='address-link-wrapper'><span>{DICTIONARY[lang].address}: </span>
                                 <a className='address-link' href={`https://2gis.kg/search/${encodeURIComponent(item.city + ' ' + item.address)}`} target='_blank'>
                                     {item.address}
                                     <img src={gis} alt="2 gis icon" />
-                                </a></p>}
+                                </a></p>} */}
                             {/* <p><span>{DICTIONARY[lang].roomCount}:</span> {item.count}</p> */}
 
-                            {(!byLink && !item.mbank_link) || (!byLink && !item.finik_account_id) && (
+                            {/* {(!byLink && !item.mbank_link) || (!byLink && !item.finik_account_id) && (
                                 <div className="card-prices single-card-prices">
                                     {Object.entries(item.price).map(([key, value]) => {
                                         if (!value) {
@@ -193,56 +184,60 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                         );
                                     })}
                                 </div>
-                            )}
+                            )} */}
 
-                            {!byLink && item.description && (
-                                <p className='advertisement-description'><span>Описание:</span> <br />
+
+                            <div>
+                                <div>
+                                    <span>{}</span>
+                                </div>
+                            </div>
+
+                            <div className='book-calendar'>
+                                <p>{DICTIONARY[lang].bookLabel}:</p>
+                                <div className="field-wrapper">
+                                    {/* <label htmlFor="name" className="field-label">Название тура</label> */}
+
+                                    <input type="text" id="name" className="text-field" readOnly={true} onFocus={() => setOpen(true)} />
+                                </div>
+                            </div>
+
+                            <div className={clsx('field-wrapper hide-name-field', { 'show-name-field': selected })}>
+                                <label htmlFor="name" className="field-label">Введите ваше имя</label>
+
+                                <input type="text" id="name" className="text-field" value={name} onChange={(e) => setName(e.target.value)} />
+                            </div>
+
+                            <div className={clsx('field-wrapper phone-field', { 'show-number': selected })}>
+                                <label htmlFor="phone" className="field-label">Оставьте номер для покупки</label>
+
+                                <input
+                                    type="tel"
+                                    pattern="[0-9]*"
+                                    noValidate id="phone"
+                                    className="text-field"
+                                    placeholder="0555 555 555"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    maxLength={10} />
+                            </div>
+
+                            {item.description && (
+                                <div className='advertisement-description'><span>Описание:</span> <br />
                                     <ExpandableText>
                                         {item.description}
                                     </ExpandableText>
-
-                                </p>
+                                </div>
                             )}
 
-                            {/* {!byLink && (
-                                show ? (
-                                    <div>
-
-                                        <div className='phone-number' onClick={copyHandler}>
-                                            {item.phone}
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
-                                        </div>
-
-                                        {showText && (<p className='copy-text'>{DICTIONARY[lang].numberCopied}</p>)}
-                                    </div>
-                                ) : (
-                                    <div className='call-btn'>
-                                        {DICTIONARY[lang].showNumber}
-                                    </div>
-                                )
-                            )} */}
+                                <p className='advertisement-description'><span>Место сбора:</span> <br />
+                                        {item.location}
+                                </p>
                         </div>
                     </div>
                 </div>
 
-                <div className='book-calendar'>
-                    <p>{DICTIONARY[lang].bookLabel}:</p>
-                    <DayPicker
-                        locale={ru}
-                        mode="multiple"
-                        selected={selected}
-                        onSelect={handleSelect}
-                        disabled={[{ before: new Date() }, ...bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))]}
-                        modifiers={{
-                            booked: bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))
-                        }}
-                        modifiersClassNames={{
-                            booked: "my-booked-class"
-                        }}
-                    />
-                </div>
-
-                {((housesList.length !== 1 && item.mbank_link) || (housesList.length !== 1 && item.finik_account_id)) && (
+                {/* {((housesList.length !== 1 && item.mbank_link) || (housesList.length !== 1 && item.finik_account_id)) && (
                     <div className='houses-container'>
                         <p>Выберите номер дома для бронирования:</p>
                         <div className='houses-list'>
@@ -251,15 +246,15 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                             ))}
                         </div>
                     </div>
-                )}
+                )} */}
 
-                <div className={clsx('field-wrapper hide-name-field', { 'show-name-field': selected.length && houses.length })}>
+                {/* <div className={clsx('field-wrapper hide-name-field', { 'show-name-field': selected.length && houses.length })}>
                     <label htmlFor="name" className="field-label">Введите ваше имя</label>
 
                     <input type="text" id="name" className="text-field" value={name} onChange={(e) => setName(e.target.value)} />
                 </div>
 
-                <div className={clsx('field-wrapper phone-field', { 'show-number': selected.length && houses.length })}>
+                <div className={clsx('field-wrapper phone-field', { 'show-number': selected.length })}>
                     <label htmlFor="phone" className="field-label">{DICTIONARY[lang].bookPhone}</label>
 
                     <input
@@ -271,26 +266,27 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         maxLength={10} />
-                </div>
+                </div> */}
 
-                {byLink && <Link to="/dom24/search" className='show-other-btn'>Посмотреть другие объявления</Link>}
                 {/* <button onClick={onSendData}>btn</button> */}
             </div>
 
 
-            <BottomDrawer isOpen={open} onClose={() => setOpen(false)} handleSelect={handleSelect}>
+            <BottomDrawer isOpen={open} onClose={() => setOpen(false)}>
                 <div className='not-partner'>
-                    <img src={noPartner} alt="no partner" />
-                    <h4>Спасибо за ваш интерес!</h4>
-
-                    <p>На данный момент этот объект еще не зарегистрирован в нашей системе, поэтому забронировать его через Booklink, к сожалению, не получится.</p>
-                    <p>Рекомендуем связаться с представителями объекта напрямую. Надеемся, что в ближайшее время он станет доступен на нашем сервисе.</p>
-
-                    <a href={`https://wa.me/${item.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Здравствуйте! Мы нашли вас через сервис https://booklink.pro/ . Можем уточнить информацию о свободных датах? Хотим забронировать.')}`} className='whatsapp-btn'>
-                        Написать в WhatsApp
-                    </a>
-
-                    <p className='check-text'>Хотим напомнить, что данный объект не проходил проверку на нашей платформе. Поэтому рекомендуем воздержаться от предоплаты до тех пор, пока вы не убедитесь в его надежности и достоверности.</p>
+                    <DayPicker
+                        locale={ru}
+                        mode="single"
+                        selected={selected}
+                        onSelect={handleSelect}
+                        disabled={[{ before: new Date() }, ...bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))]}
+                    // modifiers={{
+                    //     booked: bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))
+                    // }}
+                    // modifiersClassNames={{
+                    //     booked: "my-booked-class"
+                    // }}
+                    />
                 </div>
             </BottomDrawer>
 

@@ -30,7 +30,7 @@ export const DICTIONARY = {
     nameLabel: 'Название',
     book: 'Запросить бронь',
     recentDays: 'Ближайшие свободные даты',
-    bookLabel: 'Выберите даты для бронирования',
+    bookLabel: 'Выберите дату для бронирования',
     bookPhone: 'Оставьте номер для брони',
     notBookLabel: 'Выберите недоступные дни'
   },
@@ -67,7 +67,7 @@ export const DICTIONARY = {
 
 export const CITIES = ['Бишкек', 'Нарын', 'Каракол', 'Ош', 'Чолпон - Ата', 'Иссык - Куль'];
 export const HOUSE_TYPES = ['А - фрейм', 'Глемпинг', 'Коттедж', 'Барнхаус', 'Гостевой дом', 'Юрта'];
-export const TOURS_DURATION = ['1 день', '2 дня', '3 дня', '4 дня'];
+export const TOURS_DURATION = [1, 2, 3, 4];
 export const TOURS_TYPE = ['Пеший', 'Конный', 'Авто'];
 export const TOURS_DIFFICULTY = ['Легкий', 'Средний', 'Сложный'];
 
@@ -77,7 +77,7 @@ function CreateAdvertisement() {
   const [count, setCount] = useState('');
   const [tourDuration, setTourDuration] = useState(TOURS_DURATION[0]);
   const [tourType, setTourType] = useState(TOURS_TYPE[0]);
-  const [tourDifficulty, setTourDifficulty] = useState(TOURS_DIFFICULTY[0]);
+  const [difficulty, setTourDifficulty] = useState(TOURS_DIFFICULTY[0]);
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
 
@@ -88,10 +88,10 @@ function CreateAdvertisement() {
     const payload = {
       name,
       price: parseInt(price),
-      count: parseInt(count),
-      tourDuration,
-      tourType,
-      tourDifficulty,
+      people_limit: parseInt(count),
+      duration_in_days: tourDuration,
+      tour_type: tourType,
+      difficulty,
       description,
       location
     };
@@ -99,7 +99,7 @@ function CreateAdvertisement() {
     console.log(payload);
 
     WebApp.sendData(JSON.stringify(payload));
-  }, [name, price, count, tourDuration, tourType, tourDifficulty, description, location]);
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location]);
 
   useEffect(() => {
     WebApp.expand();
@@ -115,11 +115,11 @@ function CreateAdvertisement() {
   }, []);
 
   const isFormValid = useMemo(() => {
-    const valid = name && price && count && tourDuration && tourType && tourDifficulty && description && location;
+    const valid = name && price && count && tourDuration && tourType && difficulty && description && location;
 
     return valid;
 
-  }, [name, price, count, tourDuration, tourType, tourDifficulty, description, location]);
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location]);
 
   useEffect(() => {
       WebApp.onEvent('mainButtonClicked', onSendData);
@@ -128,7 +128,7 @@ function CreateAdvertisement() {
     return () => {
       WebApp.offEvent('mainButtonClicked', onSendData);
     };
-  }, [name, price, count, tourDuration, tourType, tourDifficulty, description, location]);
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location]);
 
   useEffect(() => {
     WebApp.MainButton.text = 'Создать тур';
@@ -189,7 +189,7 @@ function CreateAdvertisement() {
       <div className="field-wrapper select-wrapper">
         <label htmlFor="tour-difficulty" className="field-label">Уровень сложности</label>
 
-        <select name="tour-difficultye" id="tour-difficulty" value={tourDifficulty} onChange={(e) => setTourDifficulty(e.target.value)} className="select-field">
+        <select name="tour-difficultye" id="tour-difficulty" value={difficulty} onChange={(e) => setTourDifficulty(e.target.value)} className="select-field">
           {TOURS_DIFFICULTY.map((v) => (
             <option key={v} value={v}>{v}</option>
           ))}

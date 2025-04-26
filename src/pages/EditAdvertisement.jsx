@@ -17,10 +17,10 @@ import { TOURS_DURATION, TOURS_TYPE, TOURS_DIFFICULTY } from './CreateAdvertisem
 function EditAdvertisement({ doc, lang, onBackHandler }) {
   const [name, setName] = useState(doc.name);
     const [price, setPrice] = useState(doc.price);
-    const [count, setCount] = useState(doc.count);
-    const [tourDuration, setTourDuration] = useState(doc.tourDuration);
-    const [tourType, setTourType] = useState(doc.tourType);
-    const [tourDifficulty, setTourDifficulty] = useState(doc.tourDifficulty);
+    const [count, setCount] = useState(doc.people_limit);
+    const [tourDuration, setTourDuration] = useState(doc.duration_in_days);
+    const [tourType, setTourType] = useState(doc.tour_type);
+    const [difficulty, setTourDifficulty] = useState(doc.difficulty);
     const [description, setDescription] = useState(doc.description);
     const [location, setLocation] = useState(doc.location);
 
@@ -62,10 +62,10 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
       name,
       price: parseInt(price),
-      count: parseInt(count),
-      tourDuration,
-      tourType,
-      tourDifficulty,
+      people_limit: parseInt(count),
+      duration_in_days: tourDuration,
+      tour_type: tourType,
+      difficulty,
       description,
       location
     };
@@ -500,7 +500,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
               <div className="field-wrapper select-wrapper">
                 <label htmlFor="tour-difficulty" className="field-label">Уровень сложности</label>
         
-                <select name="tour-difficultye" id="tour-difficulty" value={tourDifficulty} onChange={(e) => setTourDifficulty(e.target.value)} className="select-field">
+                <select name="tour-difficultye" id="tour-difficulty" value={difficulty} onChange={(e) => setTourDifficulty(e.target.value)} className="select-field">
                   {TOURS_DIFFICULTY.map((v) => (
                     <option key={v} value={v}>{v}</option>
                   ))}

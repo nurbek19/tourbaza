@@ -44,7 +44,7 @@ body {
 
 .text-field {
     background-color: var(--tg-theme-secondary-bg-color);
-    /* background-color: #eee; */
+    background-color: #eee;
 
     font-size: 18px;
     color: var(--tg-theme-text-color);

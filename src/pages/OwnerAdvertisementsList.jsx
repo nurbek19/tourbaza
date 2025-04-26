@@ -32,7 +32,7 @@ function OwnerAdvertisementsList() {
     const fetchData = () => {
         const id = searchParams.get('owner_id');
 
-        api.get(`/houses?owner_id=${id}`).then((res) => {
+        api.get(`/tours?owner_id=${id}`).then((res) => {
             if (res.data) {
                 setData(res.data);
 
@@ -156,7 +156,7 @@ function OwnerAdvertisementsList() {
                                 )}
                                 <div className="card-detail">
                                     {item.name && (<p><span>{item.name}</span></p>)}
-                                    <p>{item?.price?.toString() ?? 0} сом</p>
+                                    <p>{item?.price} сом</p>
                                     {/* <p><span>📍</span> {item.city}, {item.address}</p> */}
                                     {/* <div className="card-actions-wrapper"> */}
                                         {/* <div className="card-actions"> */}

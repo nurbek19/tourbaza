@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import WebApp from '@twa-dev/sdk';
 
-import ImageSlider from "../components/ImageSlider";
 import SingleAdvertisement from './SingleAdvertisement';
 
 import { api } from "../api";
-import { DICTIONARY } from './CreateAdvertisement';
 
 
 import '../App.css';
@@ -21,14 +19,14 @@ const PartnerPage = () => {
     const fetchData = () => {
         const id = searchParams.get('owner_id');
 
-        api.get(`/houses?owner_id=${id}`).then((res) => {
+        api.get(`/tours?owner_id=${id}`).then((res) => {
             if (res.data) {
                 setData(res.data);
 
-                if (res.data.length === 1) {
-                    setActiveDoc(res.data[0])
-                }
-                console.log(res.data);
+                // if (res.data.length === 1) {
+                //     setActiveDoc(res.data[0])
+                // }
+                // console.log(res.data);
             }
         })
     };
@@ -58,17 +56,21 @@ const PartnerPage = () => {
                     {data.map((item) => (
                         <div key={item._id} className="card-container" onClick={() => setActiveDoc(item)}>
                             <div className="card">
-                                {item.photo_ids && (
-                                    <ImageSlider imageIds={item.photo_ids} />
+                            {item.photo_ids && (
+                                    <div className='card-single-image-container'>
+                                        {/* <ImageSlider imageIds={item.photo_ids} /> */}
+
+                                        <img key={item.photo_ids[0]} src={`https://booklink.pro/bl/houses/photo?id=${item.photo_ids[0]}`} alt="house image" />
+                                    </div>
                                 )}
                                 <div className="card-detail">
                                     {item.name && (<p><span>{item.name}</span></p>)}
-                                    <p>
+                                    {/* <p>
                                         <a href={`https://2gis.kg/search/${encodeURIComponent(item.city + ' ' + item.address)}`} target='_blank'><span>📍</span> {item.city}, {item.address}</a>
-                                    </p>
-                                    {/* <p><span>📞</span> {item.phone}</p> */}
+                                    </p> */}
+                                    <p>{item?.price} сом</p>
 
-                                    <div className="card-prices">
+                                    {/* <div className="card-prices">
                                         {Object.entries(item.price).map(([key, value]) => {
                                             if (!value) {
                                                 return null;
@@ -78,7 +80,7 @@ const PartnerPage = () => {
                                                 <div key={key}>{DICTIONARY[lang][key]} {value}</div>
                                             );
                                         })}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
