@@ -120,34 +120,6 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
 
   const isFormValid = useMemo(() => {
-    // const isSomeprice = Object.values(price).some((value) => value);
-
-    // let pricesObj = {
-    //   day: 0,
-    //   day_off: 0,
-    // };
-
-    // for (let key in price) {
-    //   if (price[key] || price[key] === 0) {
-    //     pricesObj[key] = parseInt(price[key]);
-    //   }
-    // }
-
-    // let selectedDays = doc.books;
-
-    // if (selected.length) {
-    //   const booksCopy = { ...doc.books };
-
-    //   const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
-
-    //   houses.forEach((value) => {
-    //     booksCopy[value] = [...booksCopy[value], ...selectedDates];
-    //   });
-
-
-    //   selectedDays = booksCopy;
-    // }
-
     const payload = {
       name,
       price: parseInt(price),
@@ -245,94 +217,14 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     return Array.from(setFromArr).map((d) => new Date(d));
   }, [doc.books, calendarType]);
 
-  // const bookedDays = useMemo(() => {
-  //   if (!doc.books) {
-  //     return [];
-  //   }
-
-  //   // if (calendarType === 'delete') {
-  //   //   return [];
-  //   // }
-
-  //   if (houses.length) {
-  //     const housesBookedDays = houses.reduce((acc, value) => {
-  //       const booksByHouseNumber = doc.books[value].map((entity) => entity.book_date);
-  //       acc.push(...booksByHouseNumber);
-
-  //       return acc;
-  //     }, []);
-
-  //     const setFromArr = new Set(housesBookedDays);
-
-  //     return Array.from(setFromArr).map((d) => new Date(d));
-  //   }
-
-  //   return [];
-
-    // const commonDates = Object.values(doc.books).map((arr) => (arr.map((el) => el.book_date)));;
-
-    // if (commonDates.length === 0) {
-    //   return [];
-    // }
-
-    // return commonDates.reduce((acc, arr) => acc.filter(el => arr.includes(el))).map(date => new Date(date));
-
-  // }, [doc.books, houses]);
-
-
-  // const housesList = useMemo(() => {
-  //   if (!doc.books) {
-  //     return [];
-  //   }
-
-  //   if (calendarType === 'delete') {
-  //     return Object.keys(doc.books).map((v) => ({ number: v, disabled: false }));
-  //   }
-
-  //   if (selected.length) {
-  //     const arr = [];
-  //     const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
-
-  //     Object.keys(doc.books).forEach((key) => {
-  //       const disabled = selectedDates.some((d) => doc.books[key].map((obj) => (obj.book_date)).includes(d));
-
-  //       arr.push({ number: key, disabled });
-  //     });
-
-  //     return arr;
-  //   }
-
-  //   return Object.keys(doc.books).map((v) => ({ number: v, disabled: false }));
-  // }, [doc.books, selected]);
-
-
   // useEffect(() => {
-  //   if (calendarType === 'delete' && houses.length) {
-  //     const housesBookedDays = houses.reduce((acc, value) => {
-  //       const booksByHouseNumber = doc.books[value].map((entity) => entity.book_date);
-  //       acc.push(...booksByHouseNumber);
-
-  //       return acc;
-  //     }, []);
-
-  //     const setFromArr = new Set(housesBookedDays);
-
-  //     const arr = Array.from(setFromArr).map((d) => new Date(d));
-  //     handleSelect(arr);
-  //   } else if (calendarType === 'delete' && !houses.length) {
-  //     handleSelect([]);
-  //   }
-
-  // }, [houses, calendarType]);
-
-  useEffect(() => {
     // if (doc.count === 1) {
     //   setHouses([1]);
     // } else {
     //   setHouses([]);
     // }
-    handleSelect([]);
-  }, [calendarType]);
+  //   handleSelect([]);
+  // }, [calendarType]);
 
   useEffect(() => {
     if (noteDate) {
