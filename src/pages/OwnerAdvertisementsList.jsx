@@ -148,13 +148,18 @@ function OwnerAdvertisementsList() {
                         <div key={item._id} className="card-container" onClick={() => setEditDoc(item)}>
                             <div className="card">
                                 {item.photo_ids && (
-                                    <ImageSlider imageIds={item.photo_ids} />
+                                    <div className='card-single-image-container'>
+                                        {/* <ImageSlider imageIds={item.photo_ids} /> */}
+
+                                        <img key={item.photo_ids[0]} src={`https://booklink.pro/bl/houses/photo?id=${item.photo_ids[0]}`} alt="house image" />
+                                    </div>
                                 )}
                                 <div className="card-detail">
                                     {item.name && (<p><span>{item.name}</span></p>)}
-                                    <p><span>📍</span> {item.city}, {item.address}</p>
-                                    <div className="card-actions-wrapper">
-                                        <div className="card-actions">
+                                    <p>{item?.price?.toString() ?? 0} сом</p>
+                                    {/* <p><span>📍</span> {item.city}, {item.address}</p> */}
+                                    {/* <div className="card-actions-wrapper"> */}
+                                        {/* <div className="card-actions"> */}
                                             {/* <label className="switch">
                                                 <input type="checkbox" checked={docStatuses[item._id]} onChange={(e) => statusChangeHandler(e, item._id)} />
                                                 <span className="slider round"></span>
@@ -173,12 +178,12 @@ function OwnerAdvertisementsList() {
                                                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                                                 </svg>
                                             </div> */}
-                                        </div>
+                                        {/* </div> */}
 
                                         {/* <p><span>{DICTIONARY[lang].shortRoomCount}:</span> {item.room_count}</p> */}
-                                        <p><span>📞</span> {item.phone}</p>
+                                        {/* <p><span>📞</span> {item.phone}</p> */}
 
-                                        <div className="card-prices">
+                                        {/* <div className="card-prices">
                                             {Object.entries(item.price).map(([key, value]) => {
                                                 if (!value) {
                                                     return null;
@@ -188,8 +193,8 @@ function OwnerAdvertisementsList() {
                                                     <div key={key}>{DICTIONARY[lang][key]} {value}</div>
                                                 );
                                             })}
-                                        </div>
-                                    </div>
+                                        </div> */}
+                                    {/* </div> */}
                                 </div>
                             </div>
                         </div>

@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useMemo, useState, useLayoutEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import WebApp from '@twa-dev/sdk';
-import { useIMask } from 'react-imask';
 import { useSearchParams } from 'react-router-dom';
 
-import PriceField from '../components/PriceField';
 import '../App.css';
 
 
@@ -69,71 +67,39 @@ export const DICTIONARY = {
 
 export const CITIES = ['Бишкек', 'Нарын', 'Каракол', 'Ош', 'Чолпон - Ата', 'Иссык - Куль'];
 export const HOUSE_TYPES = ['А - фрейм', 'Глемпинг', 'Коттедж', 'Барнхаус', 'Гостевой дом', 'Юрта'];
+export const TOURS_DURATION = ['1 день', '2 дня', '3 дня', '4 дня'];
+export const TOURS_TYPE = ['Пеший', 'Конный', 'Авто'];
+export const TOURS_DIFFICULTY = ['Легкий', 'Средний', 'Сложный'];
 
 function CreateAdvertisement() {
-  const [city, setCity] = useState(CITIES[0]);
-  const [address, setAddress] = useState('');
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
   const [count, setCount] = useState('');
-  const [price, setPrice] = useState({
-    day: '',
-    day_off: '',
-  });
-  const [data, setData] = useState(null);
+  const [tourDuration, setTourDuration] = useState(TOURS_DURATION[0]);
+  const [tourType, setTourType] = useState(TOURS_TYPE[0]);
+  const [tourDifficulty, setTourDifficulty] = useState(TOURS_DIFFICULTY[0]);
+  const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
+
   const [searchParams] = useSearchParams();
   const [lang, setLang] = useState('ru');
-  const [name, setName] = useState('');
-  const [prepayment, setPrepayment] = useState('');
-  const [paymentLink, setPaymentLink] = useState('');
-  const [paymentId, setPaymentId] = useState('');
-  const [houseType, setHouseType] = useState(HOUSE_TYPES[0]);
-  const [description, setDescription] = useState('');
-
-  const {
-    ref,
-    value: phone,
-  } = useIMask({ mask: '+{996}(000)000-000' });
-
-
-  const priceChangeHandler = (name, value) => {
-    const copyObj = { ...price };
-
-    copyObj[name] = value;
-
-    setPrice(copyObj);
-  }
 
   const onSendData = useCallback(() => {
-    let pricesObj = {};
-
-    for (let key in price) {
-      if (price[key]) {
-        pricesObj[key] = parseInt(price[key]);
-      }
-    }
-
     const payload = {
-      city,
-      address,
-      phone,
+      name,
+      price: parseInt(price),
       count: parseInt(count),
-      prepayment_sum: parseInt(prepayment),
-      mbank_link: paymentLink,
-      price: pricesObj,
-      house_type: houseType,
-      finik_account_id: paymentId,
+      tourDuration,
+      tourType,
+      tourDifficulty,
       description,
+      location
     };
-
-    if (name) {
-      payload.name = name;
-    }
 
     console.log(payload);
 
-    // if (data) {
     WebApp.sendData(JSON.stringify(payload));
-    // }
-  }, [city, address, count, phone, price, name, prepayment, paymentLink, houseType, paymentId, description]);
+  }, [name, price, count, tourDuration, tourType, tourDifficulty, description, location]);
 
   useEffect(() => {
     WebApp.expand();
@@ -149,51 +115,23 @@ function CreateAdvertisement() {
   }, []);
 
   const isFormValid = useMemo(() => {
-    const isSomeprice = Object.values(price).some((value) => value);
-
-    const valid = city && address && count && phone && isSomeprice && prepayment && houseType;
+    const valid = name && price && count && tourDuration && tourType && tourDifficulty && description && location;
 
     return valid;
 
-  }, [city, address, count, phone, price, prepayment, paymentLink, houseType, paymentId, description]);
+  }, [name, price, count, tourDuration, tourType, tourDifficulty, description, location]);
 
   useEffect(() => {
-    const isSomeprice = Object.values(price).some((value) => value);
-
-    if (city && address && count && phone && isSomeprice) {
-      let pricesObj = {};
-
-      for (let key in price) {
-        if (price[key]) {
-          pricesObj[key] = parseInt(price[key]);
-        }
-      }
-
-      const payload = {
-        city,
-        address,
-        phone,
-        count: parseInt(count),
-        price: pricesObj
-      };
-
-      console.log(payload, 'payload');
-
-      setData(payload);
       WebApp.onEvent('mainButtonClicked', onSendData);
-    } else {
-      setData(null)
-    }
+    
 
     return () => {
-      // WebApp.MainButton.hide();
       WebApp.offEvent('mainButtonClicked', onSendData);
     };
-  }, [city, address, count, phone, price, name, setData, prepayment, paymentLink, houseType, paymentId, description]);
+  }, [name, price, count, tourDuration, tourType, tourDifficulty, description, location]);
 
   useEffect(() => {
-    WebApp.MainButton.text = 'Создать объявление';
-    // WebApp.onEvent('mainButtonClicked', onSendData);
+    WebApp.MainButton.text = 'Создать тур';
 
     if (isFormValid) {
       WebApp.MainButton.show();
@@ -204,108 +142,58 @@ function CreateAdvertisement() {
 
     return () => {
       WebApp.MainButton.hide();
-      // WebApp.offEvent('mainButtonClicked', onSendData);
     };
 
   }, [isFormValid])
 
   return (
     <div className='container-padding'>
-
-      <div className="field-wrapper select-wrapper">
-        <label htmlFor="city" className="field-label">{DICTIONARY[lang].city}</label>
-
-        <select name="city" id="city" value={city} onChange={(e) => setCity(e.target.value)} className="select-field">
-          {CITIES.map((v) => (
-            <option key={v} value={v}>{v}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="field-wrapper select-wrapper">
-        <label htmlFor="house-type" className="field-label">Выберите тип жилья</label>
-
-        <select name="house-type" id="house-type" value={houseType} onChange={(e) => setHouseType(e.target.value)} className="select-field">
-          {HOUSE_TYPES.map((v) => (
-            <option key={v} value={v}>{v}</option>
-          ))}
-        </select>
-      </div>
-
       <div className="field-wrapper">
-        <label htmlFor="name" className="field-label">{DICTIONARY[lang].name}</label>
+        <label htmlFor="name" className="field-label">Название тура</label>
 
         <input type="text" id="name" className="text-field" value={name} onChange={(e) => setName(e.target.value)} />
       </div>
 
       <div className="field-wrapper">
-        <label htmlFor="address" className="field-label">{DICTIONARY[lang].address}</label>
+        <label htmlFor="price" className="field-label">Стоимость</label>
 
-        <input type="text" id="address" className="text-field" maxLength={50} value={address} onChange={(e) => setAddress(e.target.value)} />
+        <input type="number" id="price" pattern="[0-9]*" inputMode="numeric" className="text-field" value={price} onChange={(e) => setPrice(e.target.value)} />
       </div>
 
       <div className="field-wrapper">
-        <label htmlFor="phone" className="field-label">{DICTIONARY[lang].phone}</label>
-
-        <input type="tel" pattern="[0-9]*" noValidate id="phone" className="text-field" ref={ref} />
-      </div>
-
-      <div className="field-wrapper">
-        <span className="field-label">Количество домов</span>
+        <span className="field-label">Максимальное количество людей</span>
 
         <input type="number" id="count" className="text-field" value={count} onChange={(e) => setCount(e.target.value)} />
       </div>
 
-      <div className="field-wrapper">
-        <label htmlFor="prepayment" className="field-label">Минимальная сумма предоплаты</label>
+      <div className="field-wrapper select-wrapper">
+        <label htmlFor="tour-duration" className="field-label">Длительность</label>
 
-        <input type="number" id="prepayment" pattern="[0-9]*" inputMode="numeric" className="text-field" value={prepayment} onChange={(e) => setPrepayment(e.target.value)} />
+        <select name="tour-duration" id="tour-duration" value={tourDuration} onChange={(e) => setTourDuration(e.target.value)} className="select-field">
+          {TOURS_DURATION.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
       </div>
 
-      <div className="field-wrapper">
-        <label htmlFor="payment-link" className="field-label">Ссылка для предоплаты</label>
+      <div className="field-wrapper select-wrapper">
+        <label htmlFor="tour-type" className="field-label">Тип</label>
 
-        <input type="text" id="payment-link" className="text-field" value={paymentLink} onChange={(e) => setPaymentLink(e.target.value)} />
+        <select name="tour-type" id="tour-type" value={tourType} onChange={(e) => setTourType(e.target.value)} className="select-field">
+          {TOURS_TYPE.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
       </div>
 
-      <div className="field-wrapper">
-        <label htmlFor="payment-id" className="field-label">Finik id</label>
+      <div className="field-wrapper select-wrapper">
+        <label htmlFor="tour-difficulty" className="field-label">Уровень сложности</label>
 
-        <input type="text" id="payment-id" className="text-field" value={paymentId} onChange={(e) => setPaymentId(e.target.value)} />
-      </div>
-
-      {/* <div className="field-wrapper">
-        <span className="field-label">{DICTIONARY[lang].roomCount}</span>
-
-        <div className="room-buttons">
-          <label className="radio-input-label">
-            <input type="radio" name="room" value="1" className="radio-input" checked={room === '1'} onChange={(e) => setRoom(e.target.value)} />
-            <span className="radio-input-text">1</span>
-          </label>
-          <label className="radio-input-label">
-            <input type="radio" name="room" value="2" className="radio-input" checked={room === '2'} onChange={(e) => setRoom(e.target.value)} />
-            <span className="radio-input-text">2</span>
-          </label>
-          <label className="radio-input-label">
-            <input type="radio" name="room" value="3" className="radio-input" checked={room === '3'} onChange={(e) => setRoom(e.target.value)} />
-            <span className="radio-input-text">3</span>
-          </label>
-          <label className="radio-input-label">
-            <input type="radio" name="room" value="4" className="radio-input" checked={room === '4'} onChange={(e) => setRoom(e.target.value)} />
-            <span className="radio-input-text">4</span>
-          </label>
-          <label className="radio-input-label">
-            <input type="radio" name="room" value="5" className="radio-input" checked={room === '5'} onChange={(e) => setRoom(e.target.value)} />
-            <span className="radio-input-text">5</span>
-          </label>
-        </div>
-      </div> */}
-
-      <div className="field-wrapper">
-        <span className="field-label">Цена</span>
-
-        <PriceField label={DICTIONARY[lang].day} name="day" value={price.day} onChange={priceChangeHandler} />
-        <PriceField label={DICTIONARY[lang].day_off} name="day_off" value={price.day_off} onChange={priceChangeHandler} />
+        <select name="tour-difficultye" id="tour-difficulty" value={tourDifficulty} onChange={(e) => setTourDifficulty(e.target.value)} className="select-field">
+          {TOURS_DIFFICULTY.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
       </div>
 
       <div className="field-wrapper">
@@ -314,7 +202,13 @@ function CreateAdvertisement() {
         <textarea id="description" rows="6" className="text-field" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
       </div>
 
-      {/* <button onClick={onSendData}>btn</button> */}
+      <div className="field-wrapper">
+        <label htmlFor="location" className="field-label">Место сбора</label>
+
+        <textarea id="location" rows="3" className="text-field" value={location} onChange={(e) => setLocation(e.target.value)}></textarea>
+      </div>
+
+      <button onClick={onSendData}>btn</button>
     </div>
   )
 }
