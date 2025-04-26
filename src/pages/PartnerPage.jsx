@@ -60,7 +60,7 @@ const PartnerPage = () => {
                                     <div className='card-single-image-container'>
                                         {/* <ImageSlider imageIds={item.photo_ids} /> */}
 
-                                        <img key={item.photo_ids[0]} src={`https://booklink.pro/bl/houses/photo?id=${item.photo_ids[0]}`} alt="house image" />
+                                        <img key={item.photo_ids[0]} src={`https://booklink.pro/tb/tours/photo?id=${item.photo_ids[0]}`} alt="house image" />
                                     </div>
                                 )}
                                 <div className="card-detail">
