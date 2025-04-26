@@ -188,7 +188,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     return () => {
       WebApp.offEvent('mainButtonClicked', onSendData);
     };
-  }, [count, price, selected, houses, name, description, doc]);
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location, selected, doc]);
 
   useEffect(() => {
     WebApp.MainButton.text = 'Применить изменения';
@@ -220,7 +220,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
   useEffect(() => {
     if (doc?.available_dates?.length) {
-      const availableDatesFormatted = doc.available_dates.map((d) => new Date(d));
+      const availableDatesFormatted = doc.available_dates.map((d) => (new Date(d)));
 
       setSelected(availableDatesFormatted);
     }
@@ -361,6 +361,8 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     return map;
 
   }, [noteDate]);
+
+  console.log(selected, 'Nurbek');
 
   return (
     <div className="edit-container-padding">
