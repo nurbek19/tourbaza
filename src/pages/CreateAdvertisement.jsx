@@ -89,7 +89,7 @@ function CreateAdvertisement() {
       name,
       price: parseInt(price),
       people_limit: parseInt(count),
-      duration_in_days: tourDuration,
+      duration_in_days: parseInt(tourDuration),
       tour_type: tourType,
       difficulty,
       description,
