@@ -120,6 +120,8 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
 
   const isFormValid = useMemo(() => {
+    const selectedDays = selected.map((d) => format(d, 'MM/dd/yyyy'));
+
     const payload = {
       name,
       price: parseInt(price),
@@ -130,7 +132,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       description,
       location,
 
-      available_dates: selected,
+      available_dates: selectedDays,
     };
 
     const docObj = {
