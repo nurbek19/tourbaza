@@ -25,13 +25,13 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
 
     const onSendData = () => {
         const books = houses.reduce((acc, value) => {
-            acc[value] = format(selected, 'MM/dd/yyyy');
+            acc[value] = [format(selected, 'MM/dd/yyyy')];
 
             return acc;
         }, {});
 
         console.log({
-            house_id: item._id,
+            tour_id: item._id,
             books,
             comment: `${name} ${phone}`,
             people_amount: amount,

@@ -1133,7 +1133,7 @@ input[type=number] {
 
 .tour-detail span {
   font-size: 14px;
-  color: var(--tg-theme-button-text-color);
+  color: var(--tg-theme-text-color);
 }
 
 .single-card-detail .field-wrapper {
@@ -1142,7 +1142,7 @@ input[type=number] {
 
 .dots {
   flex-grow: 1;
-  border-bottom: 1px dashed var(--tg-theme-button-text-color);
-  border-bottom: 1px dashed #000;
+  border-bottom: 1px dashed var(--tg-theme-text-color);
+  /* border-bottom: 1px dashed #000; */
   margin: 0 10px;
 }
