@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <CreateAdvertisement />,
       },
       {
-        path: "/tourbaza/my-houses",
+        path: "/tourbaza/my-tours",
         element: <OwnerAdvertisementsList />,
       },
       {
