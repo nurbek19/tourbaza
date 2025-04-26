@@ -148,12 +148,9 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     }
 
     const isObjectChanged = deepEqual(payload, docObj);
+    const isSelectedDatesChanged = deepEqual(selectedDays, doc.available_dates);
 
-    // if (calendarType === 'delete') {
-    //   return (name && !isObjectChanged) || houses.length; // кейс когда одна бронь и пытаются удалить бронь
-    // }
-
-    return (name && price && count && tourDuration && tourType && difficulty && description && location && !isObjectChanged) || selected.length;
+    return (name && price && count && tourDuration && tourType && difficulty && description && location && !isObjectChanged) || !isSelectedDatesChanged;
   }, [name, price, count, tourDuration, tourType, difficulty, description, location, selected, doc]);
 
   useEffect(() => {
@@ -288,7 +285,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
           <DayPicker
             locale={ru}
             mode="multiple"
-            selected={selected}
+            selected={[]}
             onSelect={selectNote}
             disabled={[{ before: new Date() }]}
             modifiers={{
