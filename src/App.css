@@ -967,9 +967,15 @@ input[type=number] {
 
 .advertisement-description {
   white-space: pre-line;
+  padding-bottom: 10px;
+  font-size: 14px;
+  color: var(--tg-theme-button-text-color);
 }
 
 .advertisement-description span {
+  font-weight: 600;
+  font-size: 14px;
+    color: var(--tg-theme-text-color);
   display: inline-flex;
   padding-bottom: 5px;
 }
@@ -1109,4 +1115,34 @@ input[type=number] {
 .replace-images-btn {
   margin-top: 0;
   margin-bottom: 15px;
+}
+
+.tour-details {
+  padding-bottom: 10px;
+}
+
+.tour-details > p {
+  font-weight: 600;
+}
+
+.tour-detail {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: baseline;
+}
+
+.tour-detail span {
+  font-size: 14px;
+  color: var(--tg-theme-button-text-color);
+}
+
+.single-card-detail .field-wrapper {
+  padding-bottom: 10px;
+}
+
+.dots {
+  flex-grow: 1;
+  border-bottom: 1px dashed var(--tg-theme-button-text-color);
+  border-bottom: 1px dashed #000;
+  margin: 0 10px;
 }

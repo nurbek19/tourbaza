@@ -16,49 +16,50 @@ import { BottomDrawer } from './BottomDrawer';
 import { ExpandableText } from './ExpandableText';
 
 const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
-    const [show, setShow] = useState(false);
-    const [showText, setShowText] = useState(false);
+    // const [show, setShow] = useState(false);
+    // const [showText, setShowText] = useState(false);
     const [selected, setSelected] = useState();
-    const [searchParams] = useSearchParams();
+    // const [searchParams] = useSearchParams();
     const [name, setName] = useState('');
     const [houses, setHouses] = useState([]);
-    const byLink = searchParams.get('bylink');
+    // const byLink = searchParams.get('bylink');
     const [phone, setPhone] = useState('');
     const [open, setOpen] = useState(false);
+    const [amount, setAmount] = useState(1);
 
     // const copyHandler = () => {
     //     navigator.clipboard.writeText(item.phone);
     //     setShowText(true);
     // }
 
-    const bookedDays = useMemo(() => {
-        if (!item.books) {
-            return [];
-        }
+    // const bookedDays = useMemo(() => {
+    //     if (!item.books) {
+    //         return [];
+    //     }
 
-        if (houses.length) {
-            const housesBookedDays = houses.reduce((acc, value) => {
-                const booksByHouseNumber = item.books[value].map((entity) => entity.book_date);
-                acc.push(...booksByHouseNumber);
+    //     if (houses.length) {
+    //         const housesBookedDays = houses.reduce((acc, value) => {
+    //             const booksByHouseNumber = item.books[value].map((entity) => entity.book_date);
+    //             acc.push(...booksByHouseNumber);
 
-                return acc;
-            }, []);
+    //             return acc;
+    //         }, []);
 
-            const setFromArr = new Set(housesBookedDays);
+    //         const setFromArr = new Set(housesBookedDays);
 
-            return Array.from(setFromArr).map((d) => new Date(d));
-        }
+    //         return Array.from(setFromArr).map((d) => new Date(d));
+    //     }
 
 
-        // const commonDates = Object.values(item.books).map((arr) => (arr.map((el) => el.book_date)));
+    // const commonDates = Object.values(item.books).map((arr) => (arr.map((el) => el.book_date)));
 
-        // if (commonDates.length === 0) {
-        //     return [];
-        // }
+    // if (commonDates.length === 0) {
+    //     return [];
+    // }
 
-        // return commonDates.reduce((acc, arr) => acc.filter(el => arr.includes(el))).map(date => new Date(date));
+    // return commonDates.reduce((acc, arr) => acc.filter(el => arr.includes(el))).map(date => new Date(date));
 
-    }, [item.books, houses]);
+    // }, [item.books, houses]);
 
 
     // const housesList = useMemo(() => {
@@ -83,10 +84,10 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     // }, [item.books, selected])
 
     const onSendData = () => {
-        const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
+        // const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
 
         const books = houses.reduce((acc, value) => {
-            acc[value] = selectedDates;
+            acc[value] = format(selected, 'MM/dd/yyyy');
 
             return acc;
         }, {});
@@ -94,13 +95,15 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
         console.log({
             house_id: item._id,
             books,
-            comment: `${name} ${phone}`
+            comment: `${name} ${phone}`,
+            people_amount: amount,
         });
 
         WebApp.sendData(JSON.stringify({
             house_id: item._id,
             books,
-            comment: `${name} ${phone}`
+            comment: `${name} ${phone}`,
+            people_amount: parseInt(amount),
         }));
     }
 
@@ -116,11 +119,11 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
         return () => {
             WebApp.offEvent('mainButtonClicked', onSendData);
         };
-    }, [phone, selected]);
+    }, [phone, selected, name, amount]);
 
     const isValid = useMemo(() => {
-        return phone.length && selected.length && name;
-    }, [selected, phone, name]);
+        return phone.length && selected && name && amount;
+    }, [selected, phone, name, amount]);
 
     useEffect(() => {
         WebApp.MainButton.text = DICTIONARY[lang].book;
@@ -138,17 +141,22 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     }, [isValid]);
 
     const handleSelect = (newSelected) => {
-        // if (!item.mbank_link && !item.finik_account_id) {
-        //     setOpen(true);
-        // }
-        // e.stopPropagation();
-
-
-
-        setSelected(newSelected, 'sdafasfd');
+        setSelected(newSelected);
+        setOpen(false);
     };
 
-    console.log(selected, 'dsafasdfasdf');
+    const inputValue = useMemo(() => {
+        if (selected) {
+            return format(selected, 'dd/MM/yyyy');
+        }
+
+        if (item.available_dates?.length) {
+            return format(new Date(item.available_dates[0]), 'dd/MM/yyyy')
+        }
+
+        return '';
+
+    }, [item.available_dates, selected]);
 
 
     return (
@@ -186,20 +194,19 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                 </div>
                             )} */}
 
-
-                            <div>
-                                <div>
-                                    <span>{}</span>
-                                </div>
-                            </div>
-
                             <div className='book-calendar'>
                                 <p>{DICTIONARY[lang].bookLabel}:</p>
                                 <div className="field-wrapper">
                                     {/* <label htmlFor="name" className="field-label">Название тура</label> */}
 
-                                    <input type="text" id="name" className="text-field" readOnly={true} onFocus={() => setOpen(true)} />
+                                    <input type="text" id="name" placeholder='Выбрать дату' value={inputValue} className="text-field" readOnly={true} onFocus={() => setOpen(true)} />
                                 </div>
+                            </div>
+
+                            <div className="field-wrapper">
+                                <label htmlFor="amount" className="field-label">Количество людей</label>
+
+                                <input type="number" id="amount" pattern="[0-9]*" inputMode="numeric" className="text-field" value={amount} onChange={(e) => setAmount(e.target.value)} />
                             </div>
 
                             <div className={clsx('field-wrapper hide-name-field', { 'show-name-field': selected })}>
@@ -222,6 +229,33 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                     maxLength={10} />
                             </div>
 
+                            <div className='tour-details'>
+                                <p>Детали тура:</p>
+                                <div className='tour-detail'>
+                                    <span>Длительность</span>
+                                    <span className="dots"></span>
+                                    <p>{item.duration_in_days}</p>
+                                </div>
+
+                                <div className='tour-detail'>
+                                    <span>Тип</span>
+                                    <span className="dots"></span>
+                                    <p>{item.tour_type}</p>
+                                </div>
+
+                                <div className='tour-detail'>
+                                    <span>Уровень сложности</span>
+                                    <span className="dots"></span>
+                                    <p>{item.difficulty}</p>
+                                </div>
+
+                                <div className='tour-detail'>
+                                    <span>Стоимость за человека</span>
+                                    <span className="dots"></span>
+                                    <p>{item.price} сом</p>
+                                </div>
+                            </div>
+
                             {item.description && (
                                 <div className='advertisement-description'><span>Описание:</span> <br />
                                     <ExpandableText>
@@ -230,9 +264,9 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                 </div>
                             )}
 
-                                <p className='advertisement-description'><span>Место сбора:</span> <br />
-                                        {item.location}
-                                </p>
+                            <p className='advertisement-description'><span>Место сбора:</span> <br />
+                                {item.location}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -268,7 +302,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                         maxLength={10} />
                 </div> */}
 
-                {/* <button onClick={onSendData}>btn</button> */}
+                <button onClick={onSendData}>btn</button>
             </div>
 
 
