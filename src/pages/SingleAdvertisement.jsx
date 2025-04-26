@@ -38,7 +38,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
         });
 
         WebApp.sendData(JSON.stringify({
-            house_id: item._id,
+            tour_id: item._id,
             books,
             comment: `${name} ${phone}`,
             people_amount: parseInt(amount),
