@@ -63,7 +63,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       name,
       price: parseInt(price),
       people_limit: parseInt(count),
-      duration_in_days: tourDuration,
+      duration_in_days: parseInt(tourDuration),
       tour_type: tourType,
       difficulty,
       description,
@@ -80,7 +80,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       // });
 
 
-      payload.availableDates = selectedDates;
+      payload.available_dates = selectedDates;
     }
     // else if (calendarType === 'delete') {
     //   const booksCopy = {};
@@ -158,7 +158,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       description,
       location,
 
-      availableDates: selected,
+      available_dates: selected,
     };
 
     const docObj = {
@@ -170,7 +170,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       difficulty: doc.difficulty,
       description: doc.description,
       location: doc.location,
-      availableDates: doc.availableDates,
+      available_dates: doc.available_dates,
     }
 
     const isObjectChanged = deepEqual(payload, docObj);
@@ -219,12 +219,12 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
   };
 
   useEffect(() => {
-    if (doc?.availableDates?.length) {
-      const availableDatesFormatted = doc.availableDates.map((d) => new Date(d));
+    if (doc?.available_dates?.length) {
+      const availableDatesFormatted = doc.available_dates.map((d) => new Date(d));
 
       setSelected(availableDatesFormatted);
     }
-  }, [doc.availableDates]);
+  }, [doc.available_dates]);
 
   const selectNote = (days, triggerDate, modifiers) => {
     if (modifiers?.booked && triggerDate) {
