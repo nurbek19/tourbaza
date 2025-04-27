@@ -1,11 +1,11 @@
 import { useMemo, useState, useEffect } from 'react';
 import WebApp from '@twa-dev/sdk';
 import { DayPicker } from "react-day-picker";
-import { format, isAfter, sub } from "date-fns";
+import { format, compareAsc, addDays, isBefore } from "date-fns";
 import "react-day-picker/style.css";
 import { ru } from "react-day-picker/locale";
-import { useSearchParams } from 'react-router-dom';
 import ImageSlider from "../components/ImageSlider";
+import AnimatedBottomButton from './AnimatedBottomButton';
 import '../App.css';
 
 import { DICTIONARY } from './CreateAdvertisement';
@@ -15,6 +15,23 @@ import logo from '../images/booklink.png';
 import { BottomDrawer } from './BottomDrawer';
 import { ExpandableText } from './ExpandableText';
 
+import { api } from '../api';
+
+function getMissingDates(sortedDates) {
+    const missingDates = [];
+
+    for (let i = 0; i < sortedDates.length - 1; i++) {
+        let current = addDays(sortedDates[i], 1);
+
+        while (isBefore(current, sortedDates[i + 1])) {
+            missingDates.push(current);
+            current = addDays(current, 1);
+        }
+    }
+
+    return missingDates;
+}
+
 const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     const [selected, setSelected] = useState();
     const [name, setName] = useState('');
@@ -22,6 +39,29 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     const [phone, setPhone] = useState('');
     const [open, setOpen] = useState(false);
     const [amount, setAmount] = useState(1);
+    const [link, setlink] = useState('');
+
+    const fetchData = () => {
+        const books = houses.reduce((acc, value) => {
+            acc[value] = [format(selected, 'MM/dd/yyyy')];
+
+            return acc;
+        }, {});
+
+        const price = item.price * parseInt(amount);
+
+        api.post('/payment', { 
+            tour_id: item._id,
+            books,
+            comment: `${name} ${phone}`,
+            people_count: parseInt(amount),
+            price
+         }).then((res) => {
+            if (res.data) {
+                window.location.href = res.data.url;
+            }
+        })
+    }
 
     const onSendData = () => {
         const books = houses.reduce((acc, value) => {
@@ -46,9 +86,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     }
 
     useEffect(() => {
-        // if (item.count === 1) {
         setHouses([1]);
-        // }
     }, [])
 
     useEffect(() => {
@@ -89,12 +127,46 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
         }
 
         if (item.available_dates?.length) {
-            return format(new Date(item.available_dates[0]), 'dd/MM/yyyy')
+            const sortedDates = item.available_dates.map((d) => (new Date(d))).sort(compareAsc);
+
+            handleSelect(sortedDates[0]);
+            return format(sortedDates[0], 'dd/MM/yyyy')
         }
 
         return '';
 
     }, [item.available_dates, selected]);
+
+    const disabledDates = useMemo(() => {
+        const availableDates = item.available_dates ?? [];
+
+        if (!availableDates.length) {
+            return true;
+        }
+
+        if (availableDates.length === 1) {
+            return {
+                before: new Date(availableDates[0]),
+                after: new Date(availableDates[0]),
+            }
+        }
+
+        const sortedDates = availableDates.map(date => new Date(date)).sort(compareAsc);
+        const missingDates = getMissingDates(sortedDates);
+
+        if (!missingDates.length) {
+            return {
+                before: sortedDates[0],
+                after: sortedDates[1]
+            }
+        }
+
+        return [...missingDates, {
+            before: sortedDates[0],
+            after: sortedDates[sortedDates.length - 1]
+        }];
+
+    }, [item.available_dates]);
 
 
     return (
@@ -189,6 +261,11 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                 <button onClick={onSendData}>btn</button>
             </div>
 
+            <AnimatedBottomButton
+                visible={isValid}
+                text="Купить тур"
+                onClick={fetchData}
+            />
 
             <BottomDrawer isOpen={open} onClose={() => setOpen(false)}>
                 <div className='not-partner'>
@@ -197,16 +274,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                         mode="single"
                         selected={selected}
                         onSelect={handleSelect}
-                        disabled={[
-                            { before: new Date() },
-                            // ...bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))
-                        ]}
-                    // modifiers={{
-                    //     booked: bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))
-                    // }}
-                    // modifiersClassNames={{
-                    //     booked: "my-booked-class"
-                    // }}
+                        disabled={disabledDates}
                     />
                 </div>
             </BottomDrawer>
