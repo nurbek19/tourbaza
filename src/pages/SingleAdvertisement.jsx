@@ -78,7 +78,8 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
         });
 
 
-        WebApp.MainButton.text = 'Загрузка';
+        const price = item.price * parseInt(amount);
+        WebApp.MainButton.showProgress();
         api.post('/payment', { 
             tour_id: item._id,
             books,
@@ -91,6 +92,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
             }
         }).catch((err) => {
             console.err(err);
+            WebApp.MainButton.hideProgress();
             WebApp.MainButton.text = 'Произашла какая то ошибка';
         })
 
@@ -278,11 +280,11 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                 {/* <button onClick={onSendData}>btn</button> */}
             </div>
 
-            <AnimatedBottomButton
+            {/* <AnimatedBottomButton
                 visible={isValid}
                 text="Купить тур"
                 onClick={onSendData}
-            />
+            /> */}
 
             <BottomDrawer isOpen={open} onClose={() => setOpen(false)}>
                 <div className='not-partner'>

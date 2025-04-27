@@ -208,7 +208,7 @@ function CreateAdvertisement() {
         </select>
       </div>
 
-      <button onClick={onSendData}>btn</button>
+      {/* <button onClick={onSendData}>btn</button> */}
     </div>
   )
 }
