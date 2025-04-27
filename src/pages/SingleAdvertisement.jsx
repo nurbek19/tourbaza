@@ -90,14 +90,14 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
             comment: `${name} ${phone}`,
             people_count: parseInt(amount),
             price,
-            requester_id
+            requester_id: parseInt(requester_id)
          }).then((res) => {
             if (res.data) {
                 WebApp.MainButton.hide();
                 window.location.href = res.data.url;
             }
         }).catch((err) => {
-            console.err(err);
+            console.log(err);
             WebApp.MainButton.hideProgress();
             WebApp.MainButton.text = 'Произашла какая то ошибка';
         })
@@ -286,11 +286,11 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                 {/* <button onClick={onSendData}>btn</button> */}
             </div>
 
-            {/* <AnimatedBottomButton
+            <AnimatedBottomButton
                 visible={isValid}
                 text="Купить тур"
                 onClick={onSendData}
-            /> */}
+            />
 
             <BottomDrawer isOpen={open} onClose={() => setOpen(false)}>
                 <div className='not-partner'>
