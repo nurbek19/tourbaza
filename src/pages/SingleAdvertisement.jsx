@@ -41,27 +41,27 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     const [amount, setAmount] = useState(1);
     const [link, setlink] = useState('');
 
-    const fetchData = () => {
-        const books = houses.reduce((acc, value) => {
-            acc[value] = [format(selected, 'MM/dd/yyyy')];
+    // const fetchData = () => {
+    //     const books = houses.reduce((acc, value) => {
+    //         acc[value] = [format(selected, 'MM/dd/yyyy')];
 
-            return acc;
-        }, {});
+    //         return acc;
+    //     }, {});
 
-        const price = item.price * parseInt(amount);
+    //     const price = item.price * parseInt(amount);
 
-        api.post('/payment', { 
-            tour_id: item._id,
-            books,
-            comment: `${name} ${phone}`,
-            people_count: parseInt(amount),
-            price
-         }).then((res) => {
-            if (res.data) {
-                window.location.href = res.data.url;
-            }
-        })
-    }
+    //     api.post('/payment', { 
+    //         tour_id: item._id,
+    //         books,
+    //         comment: `${name} ${phone}`,
+    //         people_count: parseInt(amount),
+    //         price
+    //      }).then((res) => {
+    //         if (res.data) {
+    //             window.location.href = res.data.url;
+    //         }
+    //     })
+    // }
 
     const onSendData = () => {
         const books = houses.reduce((acc, value) => {
@@ -77,12 +77,29 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
             people_amount: amount,
         });
 
-        WebApp.sendData(JSON.stringify({
+
+        WebApp.MainButton.text = 'Загрузка';
+        api.post('/payment', { 
             tour_id: item._id,
             books,
             comment: `${name} ${phone}`,
-            people_amount: parseInt(amount),
-        }));
+            people_count: parseInt(amount),
+            price
+         }).then((res) => {
+            if (res.data) {
+                window.location.href = res.data.url;
+            }
+        }).catch((err) => {
+            console.err(err);
+            WebApp.MainButton.text = 'Произашла какая то ошибка';
+        })
+
+        // WebApp.sendData(JSON.stringify({
+        //     tour_id: item._id,
+        //     books,
+        //     comment: `${name} ${phone}`,
+        //     people_amount: parseInt(amount),
+        // }));
     }
 
     useEffect(() => {
@@ -102,7 +119,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     }, [selected, phone, name, amount]);
 
     useEffect(() => {
-        WebApp.MainButton.text = DICTIONARY[lang].book;
+        WebApp.MainButton.text = 'Купить тур';
 
         if (isValid) {
             WebApp.MainButton.show();
@@ -258,13 +275,13 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                     </div>
                 </div>
 
-                <button onClick={onSendData}>btn</button>
+                {/* <button onClick={onSendData}>btn</button> */}
             </div>
 
             <AnimatedBottomButton
                 visible={isValid}
                 text="Купить тур"
-                onClick={fetchData}
+                onClick={onSendData}
             />
 
             <BottomDrawer isOpen={open} onClose={() => setOpen(false)}>

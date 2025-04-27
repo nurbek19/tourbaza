@@ -969,7 +969,7 @@ input[type=number] {
   white-space: pre-line;
   padding-bottom: 10px;
   font-size: 14px;
-  color: var(--tg-theme-button-text-color);
+  color: var(--tg-theme-text-color);
 }
 
 .advertisement-description span {
