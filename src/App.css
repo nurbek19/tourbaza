@@ -1146,3 +1146,7 @@ input[type=number] {
   /* border-bottom: 1px dashed #000; */
   margin: 0 10px;
 }
+
+.single-card-detail .text-field {
+  background-color: var(--tg-theme-bg-color);
+}

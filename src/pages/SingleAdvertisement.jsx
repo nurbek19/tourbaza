@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import WebApp from '@twa-dev/sdk';
 import { DayPicker } from "react-day-picker";
+import { useSearchParams } from 'react-router-dom';
 import { format, compareAsc, addDays, isBefore } from "date-fns";
 import "react-day-picker/style.css";
 import { ru } from "react-day-picker/locale";
@@ -41,6 +42,8 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     const [amount, setAmount] = useState(1);
     const [link, setlink] = useState('');
 
+    const [searchParams] = useSearchParams();
+
     // const fetchData = () => {
     //     const books = houses.reduce((acc, value) => {
     //         acc[value] = [format(selected, 'MM/dd/yyyy')];
@@ -79,15 +82,18 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
 
 
         const price = item.price * parseInt(amount);
+        const requester_id = searchParams.get('requester_id');
         WebApp.MainButton.showProgress();
         api.post('/payment', { 
             tour_id: item._id,
             books,
             comment: `${name} ${phone}`,
             people_count: parseInt(amount),
-            price
+            price,
+            requester_id
          }).then((res) => {
             if (res.data) {
+                WebApp.MainButton.hide();
                 window.location.href = res.data.url;
             }
         }).catch((err) => {
