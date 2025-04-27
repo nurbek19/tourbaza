@@ -286,11 +286,11 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                 {/* <button onClick={onSendData}>btn</button> */}
             </div>
 
-            <AnimatedBottomButton
+            {/* <AnimatedBottomButton
                 visible={isValid}
                 text="Купить тур"
                 onClick={onSendData}
-            />
+            /> */}
 
             <BottomDrawer isOpen={open} onClose={() => setOpen(false)}>
                 <div className='not-partner'>
