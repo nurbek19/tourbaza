@@ -48,6 +48,7 @@ export function BottomDrawer({ isOpen, onClose, children }) {
             dragDirectionLock
             dragConstraints={{ top: 0, bottom: 0 }}
             onDragEnd={handleDragEnd}
+            onClick={(e) => {e.stopPropagation()}}
           >
             <div className="drawer-handle" />
             <div className="drawer-content">
