@@ -18,6 +18,9 @@ import { ExpandableText } from './ExpandableText';
 
 import { api } from '../api';
 
+import { TOURS_DURATON_LABELS } from './CreateAdvertisement';
+import { SomSymbol } from '../components/SomSymbol';
+
 function getMissingDates(sortedDates) {
     const missingDates = [];
 
@@ -246,7 +249,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                 <div className='tour-detail'>
                                     <span>Длительность</span>
                                     <span className="dots"></span>
-                                    <p>{item.duration_in_days}</p>
+                                    <p>{`${item.duration_in_days} ${TOURS_DURATON_LABELS[item.duration_in_days]}`}</p>
                                 </div>
 
                                 <div className='tour-detail'>
@@ -304,12 +307,12 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                 </div>
             </BottomDrawer>
 
-            <div className="footer">
+            {/* <div className="footer">
                 <p>Хотите такой же календарь для бронирования? 👇</p>
                 <a href="https://booklink.pro/" target="_blank">
                     <img src={logo} alt="logotype" />
                 </a>
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -55,7 +55,7 @@ const PartnerPage = () => {
                 <div className='card-list'>
                     {data.map((item) => (
                         <div key={item._id} className="card-container" onClick={() => setActiveDoc(item)}>
-                            <div className="card">
+                            <div className="card user-card">
                             {item.photo_ids && (
                                     <div className='card-single-image-container'>
                                         {/* <ImageSlider imageIds={item.photo_ids} /> */}
@@ -63,24 +63,13 @@ const PartnerPage = () => {
                                         <img key={item.photo_ids[0]} src={`https://booklink.pro/tb/tours/photo?id=${item.photo_ids[0]}`} alt="house image" />
                                     </div>
                                 )}
-                                <div className="card-detail">
+                                <div className="card-detail user-card-detail">
+                                    <div>
                                     {item.name && (<p><span>{item.name}</span></p>)}
-                                    {/* <p>
-                                        <a href={`https://2gis.kg/search/${encodeURIComponent(item.city + ' ' + item.address)}`} target='_blank'><span>📍</span> {item.city}, {item.address}</a>
-                                    </p> */}
-                                    <p>{item?.price} сом</p>
+                                    <p className="price-text">{item?.price} сом</p>
+                                    </div>
 
-                                    {/* <div className="card-prices">
-                                        {Object.entries(item.price).map(([key, value]) => {
-                                            if (!value) {
-                                                return null;
-                                            }
-
-                                            return (
-                                                <div key={key}>{DICTIONARY[lang][key]} {value}</div>
-                                            );
-                                        })}
-                                    </div> */}
+                                    <button className='search-button'>Подробнее</button>
                                 </div>
                             </div>
                         </div>

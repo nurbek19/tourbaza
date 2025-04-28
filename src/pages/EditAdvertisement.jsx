@@ -12,7 +12,7 @@ import { DICTIONARY } from './CreateAdvertisement';
 import clsx from 'clsx';
 
 
-import { TOURS_DURATION, TOURS_TYPE, TOURS_DIFFICULTY } from './CreateAdvertisement';
+import { TOURS_DURATION, TOURS_TYPE, TOURS_DIFFICULTY, TOURS_DURATON_LABELS } from './CreateAdvertisement';
 
 function EditAdvertisement({ doc, lang, onBackHandler }) {
   const [name, setName] = useState(doc.name);
@@ -253,8 +253,6 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
   }, [noteDate]);
 
-  console.log(selected, 'Nurbek');
-
   return (
     <div className="edit-container-padding">
       <div className="back-button" onClick={onBackHandler}>« {DICTIONARY[lang].back}</div>
@@ -354,7 +352,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
               </div>
         
               <div className="field-wrapper">
-                <label htmlFor="price" className="field-label">Стоимость</label>
+                <label htmlFor="price" className="field-label">Стоимость тура</label>
         
                 <input type="number" id="price" pattern="[0-9]*" inputMode="numeric" className="text-field" value={price} onChange={(e) => setPrice(e.target.value)} />
               </div>
@@ -370,7 +368,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
         
                 <select name="tour-duration" id="tour-duration" value={tourDuration} onChange={(e) => setTourDuration(e.target.value)} className="select-field">
                   {TOURS_DURATION.map((v) => (
-                    <option key={v} value={v}>{v}</option>
+                    <option key={v} value={v}>{`${v} ${TOURS_DURATON_LABELS[v]}`}</option>
                   ))}
                 </select>
               </div>

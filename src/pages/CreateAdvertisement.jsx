@@ -70,6 +70,12 @@ export const HOUSE_TYPES = ['А - фрейм', 'Глемпинг', 'Коттед
 export const TOURS_DURATION = [1, 2, 3, 4];
 export const TOURS_TYPE = ['Пеший', 'Конный', 'Авто'];
 export const TOURS_DIFFICULTY = ['Легкий', 'Средний', 'Сложный'];
+export const TOURS_DURATON_LABELS = {
+  1: 'день',
+  2: 'дня',
+  3: 'дня',
+  4: 'дня',
+}
 
 function CreateAdvertisement() {
   const [name, setName] = useState('');
@@ -155,7 +161,7 @@ function CreateAdvertisement() {
       </div>
 
       <div className="field-wrapper">
-        <label htmlFor="price" className="field-label">Стоимость</label>
+        <label htmlFor="price" className="field-label">Стоимость тура</label>
 
         <input type="number" id="price" pattern="[0-9]*" inputMode="numeric" className="text-field" value={price} onChange={(e) => setPrice(e.target.value)} />
       </div>
@@ -183,7 +189,7 @@ function CreateAdvertisement() {
 
         <select name="tour-duration" id="tour-duration" value={tourDuration} onChange={(e) => setTourDuration(e.target.value)} className="select-field">
           {TOURS_DURATION.map((v) => (
-            <option key={v} value={v}>{v}</option>
+            <option key={v} value={v}>{`${v} ${TOURS_DURATON_LABELS[v]}`}</option>
           ))}
         </select>
       </div>
