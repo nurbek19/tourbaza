@@ -86,14 +86,14 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
         const price = item.price * parseInt(amount);
         const requester_id = searchParams.get('requester_id');
         WebApp.MainButton.showProgress();
-        api.post('/payment', { 
+        api.post('/payment', {
             tour_id: item._id,
             books,
             comment: `${name} ${phone}`,
             people_count: parseInt(amount),
             price,
             requester_id: parseInt(requester_id)
-         }).then((res) => {
+        }).then((res) => {
             if (res.data) {
                 WebApp.MainButton.hide();
                 window.location.href = res.data.url;
@@ -145,7 +145,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
 
     const handleSelect = (newSelected) => {
         setSelected(newSelected);
-        setOpen(false);
+        // setOpen(false);
     };
 
     const inputValue = useMemo(() => {
@@ -199,7 +199,8 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
     return (
         <div className='search-container'>
             <div className="back-button back-button-padding" onClick={onBackHandler}>« {DICTIONARY[lang].back}</div>
-            <div className={clsx('single-result-card', { 'card-padding': selected })}>
+            <div className={clsx('single-result-card')}>
+            {/* { 'card-padding': selected } */}
                 <div className="">
                     <div className="single-card">
                         {item.photo_ids && (
@@ -214,7 +215,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
 
                             <div className='tour-details'>
                                 <p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
                                     Детали тура:
                                 </p>
                                 <div className='tour-detail'>
@@ -245,9 +246,9 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                             {item.description && (
                                 <div className='advertisement-description'>
                                     <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
                                         Описание:
-                                        </span>
+                                    </span>
                                     <br />
                                     <ExpandableText>
                                         {item.description}
@@ -257,45 +258,19 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
 
                             <p className='advertisement-description'>
                                 <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
                                     Место сбора:
-                                    </span>
-                                    <br />
+                                </span>
+                                <br />
                                 {item.location}
                             </p>
 
-                            <div className='book-calendar'>
+                            {/* <div className='book-calendar'>
                                 <p>{DICTIONARY[lang].bookLabel}:</p>
                                 <div className="field-wrapper">
                                     <input type="text" id="name" placeholder='Выбрать дату' value={inputValue} className="text-field" readOnly={true} onFocus={() => setOpen(true)} />
                                 </div>
-                            </div>
-
-                            <div className="field-wrapper">
-                                <label htmlFor="amount" className="field-label">Количество людей</label>
-
-                                <input type="number" id="amount" pattern="[0-9]*" inputMode="numeric" className="text-field" value={amount} onChange={(e) => setAmount(e.target.value)} />
-                            </div>
-
-                            <div className={clsx('field-wrapper hide-name-field', { 'show-name-field': selected })}>
-                                <label htmlFor="name" className="field-label">Введите ваше имя</label>
-
-                                <input type="text" id="name" className="text-field" value={name} onChange={(e) => setName(e.target.value)} />
-                            </div>
-
-                            <div className={clsx('field-wrapper phone-field', { 'show-number': selected })}>
-                                <label htmlFor="phone" className="field-label">Оставьте номер для покупки</label>
-
-                                <input
-                                    type="tel"
-                                    pattern="[0-9]*"
-                                    noValidate id="phone"
-                                    className="text-field"
-                                    placeholder="0555 555 555"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                    maxLength={10} />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -318,6 +293,32 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                         onSelect={handleSelect}
                         disabled={disabledDates}
                     />
+
+                    <div className="field-wrapper">
+                        <label htmlFor="amount" className="field-label">Количество людей</label>
+
+                        <input type="number" id="amount" pattern="[0-9]*" inputMode="numeric" className="text-field" value={amount} onChange={(e) => setAmount(e.target.value)} />
+                    </div>
+
+                    <div className={clsx('field-wrapper hide-name-field', { 'show-name-field': selected })}>
+                        <label htmlFor="name" className="field-label">Введите ваше имя</label>
+
+                        <input type="text" id="name" className="text-field" value={name} onChange={(e) => setName(e.target.value)} />
+                    </div>
+
+                    <div className={clsx('field-wrapper phone-field', { 'show-number': selected })}>
+                        <label htmlFor="phone" className="field-label">Оставьте номер для покупки</label>
+
+                        <input
+                            type="tel"
+                            pattern="[0-9]*"
+                            noValidate id="phone"
+                            className="text-field"
+                            placeholder="0555 555 555"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            maxLength={10} />
+                    </div>
                 </div>
             </BottomDrawer>
 
