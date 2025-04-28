@@ -1064,11 +1064,11 @@ input[type=number] {
 
 .price-label {
   background-color: var(--tg-theme-button-color);
-  background-color: blue;
+  /* background-color: blue; */
   padding: 4px 15px;
   border-radius: 4px;
   color: var(--tg-theme-button-text-color);
-  
+
 }
 
 .address-link-wrapper {
@@ -1145,6 +1145,15 @@ input[type=number] {
   box-sizing: border-box;
 }
 
+.fixed-button {
+  transform: translateX(-50%) !important;
+  background-color: var(--tg-theme-button-color);
+  /* background-color: blue; */
+
+  font-size: 18px;
+  color: var(--tg-theme-button-text-color);
+}
+
 .replace-images-btn {
   margin-top: 0;
   margin-bottom: 15px;
@@ -1167,7 +1176,7 @@ input[type=number] {
 .tour-details > p svg,
 .advertisement-description span svg {
     stroke: var(--tg-theme-button-color);
-    stroke: blue;
+    /* stroke: blue; */
 }
 
 .advertisement-description span {
@@ -1202,6 +1211,8 @@ input[type=number] {
 .single-card-detail .text-field {
   background-color: var(--tg-theme-bg-color);
 }
+
+
 
 .som-symbol {
   opacity: 1;

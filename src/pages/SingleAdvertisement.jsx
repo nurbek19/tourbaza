@@ -19,7 +19,6 @@ import { ExpandableText } from './ExpandableText';
 import { api } from '../api';
 
 import { TOURS_DURATON_LABELS } from './CreateAdvertisement';
-import { SomSymbol } from '../components/SomSymbol';
 
 function getMissingDates(sortedDates) {
     const missingDates = [];
@@ -304,11 +303,11 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                 {/* <button onClick={onSendData}>btn</button> */}
             </div>
 
-            {/* <AnimatedBottomButton
-                visible={isValid}
-                text="Купить тур"
-                onClick={onSendData}
-            /> */}
+            <AnimatedBottomButton
+                visible={true}
+                text="Оформить тур"
+                onClick={() => setOpen(true)}
+            />
 
             <BottomDrawer isOpen={open} onClose={() => setOpen(false)}>
                 <div className='not-partner'>
