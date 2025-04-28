@@ -1067,6 +1067,8 @@ input[type=number] {
   background-color: blue;
   padding: 4px 15px;
   border-radius: 4px;
+  color: var(--tg-theme-button-text-color);
+  
 }
 
 .address-link-wrapper {
