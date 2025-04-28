@@ -423,7 +423,7 @@ input[type=number] {
   top: 0;
   background-color: var(--tg-theme-bg-color);
   /* background-color: #eee; */
-  padding: 10px;
+  /* padding: 10px; */
   box-sizing: border-box;
 }
 
@@ -542,6 +542,8 @@ input[type=number] {
 
 .single-card-detail {
   padding-top: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .call-btn {
@@ -579,12 +581,16 @@ input[type=number] {
 }
 
 .single-result-card {
-  background-color: var(--tg-theme-secondary-bg-color);
+  /* background-color: var(--tg-theme-secondary-bg-color); */
   /* background-color: #eee; */
   border-radius: 8px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  padding: 10px;
+  padding: 10px 0;
+}
+
+.single-result-card .embla__slide img {
+  border-radius: 0;
 }
 
 .single-result-card.card-padding,
@@ -807,6 +813,7 @@ input[type=number] {
 .card-detail .bold-title {
   font-size: 18px;
   font-weight: 600;
+  padding-bottom: 15px;
 }
 
 .calendar-type-buttons {
@@ -971,10 +978,21 @@ input[type=number] {
 }
 
 .advertisement-description {
+  background-color: var(--tg-theme-secondary-bg-color);
+  background-color: #eee;
+  padding: 15px 10px;
+  margin-top: 15px;
+  border-radius: 4px;
+
   white-space: pre-line;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   font-size: 14px;
   color: var(--tg-theme-text-color);
+}
+
+.single-card-detail .advertisement-description {
+  margin-top: 15px;
+  padding: 15px 10px;
 }
 
 .advertisement-description span {
@@ -1036,11 +1054,19 @@ input[type=number] {
 .bold-title {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 5px;
 }
 
 .bold-title img {
   width: 17px;
+}
+
+.price-label {
+  background-color: var(--tg-theme-button-color);
+  background-color: blue;
+  padding: 4px 15px;
+  border-radius: 4px;
 }
 
 .address-link-wrapper {
@@ -1123,22 +1149,41 @@ input[type=number] {
 }
 
 .tour-details {
-  padding-bottom: 10px;
+  background-color: var(--tg-theme-secondary-bg-color);
+  background-color: #eee;
+  padding: 15px 10px;
+  border-radius: 4px;
 }
 
 .tour-details>p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 600;
+}
+
+.tour-details > p svg,
+.advertisement-description span svg {
+    stroke: var(--tg-theme-button-color);
+    stroke: blue;
+}
+
+.advertisement-description span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .tour-detail {
   display: flex;
-  /* justify-content: space-between; */
-  align-items: baseline;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
 }
 
 .tour-detail span {
   font-size: 14px;
-  color: var(--tg-theme-text-color);
+  color: var(--tg-theme-subtitle-text-color);
 }
 
 .single-card-detail .field-wrapper {
@@ -1182,4 +1227,9 @@ input[type=number] {
 
 .user-card {
   align-items: stretch;
+}
+
+.back-button-padding {
+  padding-left: 10px;
+  padding-right: 10px;
 }

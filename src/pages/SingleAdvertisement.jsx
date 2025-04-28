@@ -199,7 +199,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
 
     return (
         <div className='search-container'>
-            <div className="back-button" onClick={onBackHandler}>« {DICTIONARY[lang].back}</div>
+            <div className="back-button back-button-padding" onClick={onBackHandler}>« {DICTIONARY[lang].back}</div>
             <div className={clsx('single-result-card', { 'card-padding': selected })}>
                 <div className="">
                     <div className="single-card">
@@ -209,6 +209,60 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                         <div className="card-detail single-card-detail">
                             <p className="bold-title">
                                 {item.name}
+
+                                <span className='price-label'>{item.price} сом</span>
+                            </p>
+
+                            <div className='tour-details'>
+                                <p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                                    Детали тура:
+                                </p>
+                                <div className='tour-detail'>
+                                    <span>Длительность</span>
+                                    {/* <span className="dots"></span> */}
+                                    <p>{`${item.duration_in_days} ${TOURS_DURATON_LABELS[item.duration_in_days]}`}</p>
+                                </div>
+
+                                <div className='tour-detail'>
+                                    <span>Тип</span>
+                                    {/* <span className="dots"></span> */}
+                                    <p>{item.tour_type}</p>
+                                </div>
+
+                                <div className='tour-detail'>
+                                    <span>Уровень сложности</span>
+                                    {/* <span className="dots"></span> */}
+                                    <p>{item.difficulty}</p>
+                                </div>
+
+                                <div className='tour-detail'>
+                                    <span>Стоимость за человека</span>
+                                    {/* <span className="dots"></span> */}
+                                    <p>{item.price} сом</p>
+                                </div>
+                            </div>
+
+                            {item.description && (
+                                <div className='advertisement-description'>
+                                    <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                                        Описание:
+                                        </span>
+                                    <br />
+                                    <ExpandableText>
+                                        {item.description}
+                                    </ExpandableText>
+                                </div>
+                            )}
+
+                            <p className='advertisement-description'>
+                                <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                                    Место сбора:
+                                    </span>
+                                    <br />
+                                {item.location}
                             </p>
 
                             <div className='book-calendar'>
@@ -243,45 +297,6 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                     onChange={(e) => setPhone(e.target.value)}
                                     maxLength={10} />
                             </div>
-
-                            <div className='tour-details'>
-                                <p>Детали тура:</p>
-                                <div className='tour-detail'>
-                                    <span>Длительность</span>
-                                    <span className="dots"></span>
-                                    <p>{`${item.duration_in_days} ${TOURS_DURATON_LABELS[item.duration_in_days]}`}</p>
-                                </div>
-
-                                <div className='tour-detail'>
-                                    <span>Тип</span>
-                                    <span className="dots"></span>
-                                    <p>{item.tour_type}</p>
-                                </div>
-
-                                <div className='tour-detail'>
-                                    <span>Уровень сложности</span>
-                                    <span className="dots"></span>
-                                    <p>{item.difficulty}</p>
-                                </div>
-
-                                <div className='tour-detail'>
-                                    <span>Стоимость за человека</span>
-                                    <span className="dots"></span>
-                                    <p>{item.price} сом</p>
-                                </div>
-                            </div>
-
-                            {item.description && (
-                                <div className='advertisement-description'><span>Описание:</span> <br />
-                                    <ExpandableText>
-                                        {item.description}
-                                    </ExpandableText>
-                                </div>
-                            )}
-
-                            <p className='advertisement-description'><span>Место сбора:</span> <br />
-                                {item.location}
-                            </p>
                         </div>
                     </div>
                 </div>
