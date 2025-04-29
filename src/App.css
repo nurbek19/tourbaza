@@ -979,7 +979,7 @@ input[type=number] {
 
 .advertisement-description {
   background-color: var(--tg-theme-secondary-bg-color);
-  background-color: #eee;
+  /* background-color: #eee; */
   padding: 15px 10px;
   margin-top: 15px;
   border-radius: 4px;
@@ -1161,7 +1161,7 @@ input[type=number] {
 
 .tour-details {
   background-color: var(--tg-theme-secondary-bg-color);
-  background-color: #eee;
+  /* background-color: #eee; */
   padding: 15px 10px;
   border-radius: 4px;
 }
@@ -1245,4 +1245,62 @@ input[type=number] {
 .back-button-padding {
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.tour-payment {
+  padding: 20px 20px 150px;
+}
+
+.counter-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.increment, .decrement {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background-color: var(--tg-theme-secondary-bg-color);
+  /* background-color: #eee; */
+  color: var(--tg-theme-text-color);
+  font-size: 18px;
+  border: none;
+  padding: 0;
+}
+
+.counter-value {
+  color: var(--tg-theme-text-color);
+  font-size: 18px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.tour-payment .field-wrapper {
+  padding-bottom: 15px;
+}
+
+.total-sum {
+  color: var(--tg-theme-text-color);
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.total-sum p,
+.one-person-sum p {
+  margin: 0;
+}
+
+.one-person-sum {
+  color: var(--tg-theme-text-color);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
