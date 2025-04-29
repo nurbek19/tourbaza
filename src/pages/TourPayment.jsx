@@ -67,7 +67,7 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
             tour_id: item._id,
             books,
             comment: `${name} ${phone}`,
-            people_amount: amount,
+            people_count: amount,
         });
 
 

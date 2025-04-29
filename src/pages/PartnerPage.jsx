@@ -5,6 +5,7 @@ import WebApp from '@twa-dev/sdk';
 import SingleAdvertisement from './SingleAdvertisement';
 
 import { api } from "../api";
+import { TOURS_DURATON_LABELS } from './CreateAdvertisement';
 
 
 import '../App.css';
@@ -66,10 +67,12 @@ const PartnerPage = () => {
                                 <div className="card-detail user-card-detail">
                                     <div>
                                     {item.name && (<p><span>{item.name}</span></p>)}
-                                    <p className="price-text">{item?.price} сом</p>
+                                    <p className="price-text">{`${item.tour_type} | ${item.duration_in_days + ' ' + TOURS_DURATON_LABELS[item.duration_in_days]} | ${item.difficulty}`}</p>
+                                    {/* <p className="price-text">{item?.price} сом</p> */}
                                     </div>
 
-                                    <button className='search-button'>Подробнее</button>
+                                    {/* <button className='search-button'>Подробнее</button> */}
+                                    <p><span>{item.price} сом</span></p>
                                 </div>
                             </div>
                         </div>

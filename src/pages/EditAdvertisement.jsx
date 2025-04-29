@@ -16,13 +16,13 @@ import { TOURS_DURATION, TOURS_TYPE, TOURS_DIFFICULTY, TOURS_DURATON_LABELS } fr
 
 function EditAdvertisement({ doc, lang, onBackHandler }) {
   const [name, setName] = useState(doc.name);
-    const [price, setPrice] = useState(doc.price);
-    const [count, setCount] = useState(doc.people_limit);
-    const [tourDuration, setTourDuration] = useState(doc.duration_in_days);
-    const [tourType, setTourType] = useState(doc.tour_type);
-    const [difficulty, setTourDifficulty] = useState(doc.difficulty);
-    const [description, setDescription] = useState(doc.description);
-    const [location, setLocation] = useState(doc.location);
+  const [price, setPrice] = useState(doc.price);
+  const [count, setCount] = useState(doc.people_limit);
+  const [tourDuration, setTourDuration] = useState(doc.duration_in_days);
+  const [tourType, setTourType] = useState(doc.tour_type);
+  const [difficulty, setTourDifficulty] = useState(doc.difficulty);
+  const [description, setDescription] = useState(doc.description);
+  const [location, setLocation] = useState(doc.location);
 
   // const [city, setCity] = useState(doc.city);
   // const [address, setAddress] = useState(doc.address);
@@ -217,11 +217,11 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
   }, [doc.books, calendarType]);
 
   // useEffect(() => {
-    // if (doc.count === 1) {
-    //   setHouses([1]);
-    // } else {
-    //   setHouses([]);
-    // }
+  // if (doc.count === 1) {
+  //   setHouses([1]);
+  // } else {
+  //   setHouses([]);
+  // }
   //   handleSelect([]);
   // }, [calendarType]);
 
@@ -237,19 +237,20 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
   }, [noteDate])
 
   const notes = useMemo(() => {
-    const map = {};
+    const arr = [];
 
     Object.entries(doc.books).forEach(([key, values]) => {
-      map[key] = '';
+      // map[key] = '';
 
       values.forEach((v) => {
         if (v.book_date === noteDate) {
-          map[key] = v.book_comment;
+          arr.push(v)
+          // map[key] = v.book_comment;
         }
       })
     });
 
-    return map;
+    return arr;
 
   }, [noteDate]);
 
@@ -320,12 +321,12 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
                   { before: new Date() },
                   // ...bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))
                 ]}
-                // modifiers={{
-                //   booked: bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))
-                // }}
-                // modifiersClassNames={{
-                //   booked: "my-booked-class"
-                // }}
+              // modifiers={{
+              //   booked: bookedDays.filter((el) => (isAfter(el, sub(new Date(), { days: 1 }))))
+              // }}
+              // modifiersClassNames={{
+              //   booked: "my-booked-class"
+              // }}
               />
             </div>
           </div>
@@ -346,64 +347,64 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
       <div className={clsx('edit-data-container', { 'show-edit-data': editData })}>
         <div className="field-wrapper">
-                <label htmlFor="name" className="field-label">Название тура</label>
-        
-                <input type="text" id="name" className="text-field" value={name} onChange={(e) => setName(e.target.value)} />
-              </div>
-        
-              <div className="field-wrapper">
-                <label htmlFor="price" className="field-label">Стоимость тура</label>
-        
-                <input type="number" id="price" pattern="[0-9]*" inputMode="numeric" className="text-field" value={price} onChange={(e) => setPrice(e.target.value)} />
-              </div>
-        
-              <div className="field-wrapper">
-                <span className="field-label">Максимальное количество людей</span>
-        
-                <input type="number" id="count" className="text-field" value={count} onChange={(e) => setCount(e.target.value)} />
-              </div>
-        
-              <div className="field-wrapper select-wrapper">
-                <label htmlFor="tour-duration" className="field-label">Длительность</label>
-        
-                <select name="tour-duration" id="tour-duration" value={tourDuration} onChange={(e) => setTourDuration(e.target.value)} className="select-field">
-                  {TOURS_DURATION.map((v) => (
-                    <option key={v} value={v}>{`${v} ${TOURS_DURATON_LABELS[v]}`}</option>
-                  ))}
-                </select>
-              </div>
-        
-              <div className="field-wrapper select-wrapper">
-                <label htmlFor="tour-type" className="field-label">Тип</label>
-        
-                <select name="tour-type" id="tour-type" value={tourType} onChange={(e) => setTourType(e.target.value)} className="select-field">
-                  {TOURS_TYPE.map((v) => (
-                    <option key={v} value={v}>{v}</option>
-                  ))}
-                </select>
-              </div>
-        
-              <div className="field-wrapper select-wrapper">
-                <label htmlFor="tour-difficulty" className="field-label">Уровень сложности</label>
-        
-                <select name="tour-difficultye" id="tour-difficulty" value={difficulty} onChange={(e) => setTourDifficulty(e.target.value)} className="select-field">
-                  {TOURS_DIFFICULTY.map((v) => (
-                    <option key={v} value={v}>{v}</option>
-                  ))}
-                </select>
-              </div>
-        
-              <div className="field-wrapper">
-                <label htmlFor="description" className="field-label">Описание</label>
-        
-                <textarea id="description" rows="6" className="text-field" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-              </div>
-        
-              <div className="field-wrapper">
-                <label htmlFor="location" className="field-label">Место сбора</label>
-        
-                <textarea id="location" rows="3" className="text-field" value={location} onChange={(e) => setLocation(e.target.value)}></textarea>
-              </div>
+          <label htmlFor="name" className="field-label">Название тура</label>
+
+          <input type="text" id="name" className="text-field" value={name} onChange={(e) => setName(e.target.value)} />
+        </div>
+
+        <div className="field-wrapper">
+          <label htmlFor="price" className="field-label">Стоимость тура</label>
+
+          <input type="number" id="price" pattern="[0-9]*" inputMode="numeric" className="text-field" value={price} onChange={(e) => setPrice(e.target.value)} />
+        </div>
+
+        <div className="field-wrapper">
+          <span className="field-label">Максимальное количество людей</span>
+
+          <input type="number" id="count" className="text-field" value={count} onChange={(e) => setCount(e.target.value)} />
+        </div>
+
+        <div className="field-wrapper select-wrapper">
+          <label htmlFor="tour-duration" className="field-label">Длительность</label>
+
+          <select name="tour-duration" id="tour-duration" value={tourDuration} onChange={(e) => setTourDuration(e.target.value)} className="select-field">
+            {TOURS_DURATION.map((v) => (
+              <option key={v} value={v}>{`${v} ${TOURS_DURATON_LABELS[v]}`}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="field-wrapper select-wrapper">
+          <label htmlFor="tour-type" className="field-label">Тип</label>
+
+          <select name="tour-type" id="tour-type" value={tourType} onChange={(e) => setTourType(e.target.value)} className="select-field">
+            {TOURS_TYPE.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="field-wrapper select-wrapper">
+          <label htmlFor="tour-difficulty" className="field-label">Уровень сложности</label>
+
+          <select name="tour-difficultye" id="tour-difficulty" value={difficulty} onChange={(e) => setTourDifficulty(e.target.value)} className="select-field">
+            {TOURS_DIFFICULTY.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="field-wrapper">
+          <label htmlFor="description" className="field-label">Описание</label>
+
+          <textarea id="description" rows="6" className="text-field" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+        </div>
+
+        <div className="field-wrapper">
+          <label htmlFor="location" className="field-label">Место сбора</label>
+
+          <textarea id="location" rows="3" className="text-field" value={location} onChange={(e) => setLocation(e.target.value)}></textarea>
+        </div>
       </div>
 
       {noteDate && (
@@ -414,20 +415,13 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
             </div>
             <h4>{format(new Date(noteDate), 'd MMMM', { locale: ru })}</h4>
 
-            {Object.entries(notes).map(([key, value]) => {
-              if (!value) {
-                return null;
-              }
-
-              return (
-                <div key={key} className='note-card'>
-                  <p>
-                    {/* <span>🏠 {key}</span> */}
-                    {value}
-                    </p>
-                </div>
-              )
-            })}
+            {notes.map((note) => (
+              <div key={note.book_comment} className='note-card'>
+                <p>
+                  {note.book_comment}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       )}
