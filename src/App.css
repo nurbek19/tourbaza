@@ -923,7 +923,7 @@ input[type=number] {
 }
 
 .note-card {
-  background-color: var(--tg-theme-bg-color);
+  /* background-color: var(--tg-theme-bg-color); */
   /* background-color: #eee; */
   /* padding: 10px; */
   border-radius: 8px;
