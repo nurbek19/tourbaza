@@ -5,6 +5,8 @@ import { format, compareAsc, addDays, isBefore } from "date-fns";
 import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 
+import { api } from '../api';
+
 import "react-day-picker/style.css";
 import { ru } from "react-day-picker/locale";
 

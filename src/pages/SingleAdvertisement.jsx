@@ -13,7 +13,7 @@ import clsx from 'clsx';
 
 import { ExpandableText } from './ExpandableText';
 
-import { api } from '../api';
+// import { api } from '../api';
 
 import { TOURS_DURATON_LABELS } from './CreateAdvertisement';
 import TourPayment from './TourPayment';
