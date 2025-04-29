@@ -1267,8 +1267,8 @@ input[type=number] {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 4px;
   background-color: var(--tg-theme-secondary-bg-color);
   /* background-color: #eee; */
