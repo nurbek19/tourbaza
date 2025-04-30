@@ -66,16 +66,19 @@ export const DICTIONARY = {
 
 export const CITIES = ['Бишкек', 'Нарын', 'Каракол', 'Ош', 'Чолпон - Ата', 'Иссык - Куль'];
 export const HOUSE_TYPES = ['А - фрейм', 'Глемпинг', 'Коттедж', 'Барнхаус', 'Гостевой дом', 'Юрта'];
-export const TOURS_DURATION = [1, 2, 3, 4];
+export const TOURS_DURATION = [1, 2, 3, 4, 5];
 export const TOURS_TYPE = ['Пеший',
   'Конный',
   'Авто',
-  'Кемпинг', 
-  'Велотур',
-  'Водный тур',
   'Культурный',
   'Зимний',
+  'Кемпинг',
   'Экстримальный',
+  'Велотур',
+  'Водный тур',
+
+
+
   'Семейный'];
 export const TOURS_DIFFICULTY = ['Легкий', 'Средний', 'Сложный', 'Экстремальный'];
 export const TOURS_DURATON_LABELS = {
@@ -83,6 +86,7 @@ export const TOURS_DURATON_LABELS = {
   2: 'дня',
   3: 'дня',
   4: 'дня',
+  5: 'дней',
 }
 
 function CreateAdvertisement() {
@@ -136,8 +140,8 @@ function CreateAdvertisement() {
   }, [name, price, count, tourDuration, tourType, difficulty, description, location]);
 
   useEffect(() => {
-      WebApp.onEvent('mainButtonClicked', onSendData);
-    
+    WebApp.onEvent('mainButtonClicked', onSendData);
+
 
     return () => {
       WebApp.offEvent('mainButtonClicked', onSendData);
