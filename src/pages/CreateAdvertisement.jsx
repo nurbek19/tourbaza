@@ -64,12 +64,20 @@ export const DICTIONARY = {
   }
 }
 
-
 export const CITIES = ['Бишкек', 'Нарын', 'Каракол', 'Ош', 'Чолпон - Ата', 'Иссык - Куль'];
 export const HOUSE_TYPES = ['А - фрейм', 'Глемпинг', 'Коттедж', 'Барнхаус', 'Гостевой дом', 'Юрта'];
 export const TOURS_DURATION = [1, 2, 3, 4];
-export const TOURS_TYPE = ['Пеший', 'Конный', 'Авто'];
-export const TOURS_DIFFICULTY = ['Легкий', 'Средний', 'Сложный'];
+export const TOURS_TYPE = ['Пеший',
+  'Конный',
+  'Авто',
+  'Кемпинг', 
+  'Велотур',
+  'Водный тур',
+  'Культурный',
+  'Зимний',
+  'Экстримальный',
+  'Семейный'];
+export const TOURS_DIFFICULTY = ['Легкий', 'Средний', 'Сложный', 'Экстремальный'];
 export const TOURS_DURATON_LABELS = {
   1: 'день',
   2: 'дня',
