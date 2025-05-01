@@ -32,7 +32,7 @@ export const DICTIONARY = {
     recentDays: 'Ближайшие свободные даты',
     bookLabel: 'Выберите дату для бронирования',
     bookPhone: 'Оставьте номер для брони',
-    notBookLabel: 'Выберите недоступные дни'
+    notBookLabel: 'Выберите доступные дни'
   },
   'kg': {
     city: 'Шаар',
