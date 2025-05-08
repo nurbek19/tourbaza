@@ -169,6 +169,16 @@ function CreateAdvertisement() {
 
   return (
     <div className='container-padding'>
+      <div className="field-wrapper select-wrapper">
+        <label htmlFor="country" className="field-label">Страна</label>
+
+        <select name="country" id="country" value={country} onChange={(e) => setCountry(e.target.value)} className="select-field">
+          {COUNTRIES.map((v) => (
+            <option key={v} value={v}>{v}</option>
+          ))}
+        </select>
+      </div>
+
       <div className="field-wrapper">
         <label htmlFor="name" className="field-label">Название тура</label>
 
@@ -197,16 +207,6 @@ function CreateAdvertisement() {
         <label htmlFor="location" className="field-label">Место сбора</label>
 
         <textarea id="location" rows="3" className="text-field" value={location} onChange={(e) => setLocation(e.target.value)}></textarea>
-      </div>
-
-      <div className="field-wrapper select-wrapper">
-        <label htmlFor="country" className="field-label">Страна</label>
-
-        <select name="country" id="country" value={country} onChange={(e) => setCountry(e.target.value)} className="select-field">
-          {COUNTRIES.map((v) => (
-            <option key={v} value={v}>{v}</option>
-          ))}
-        </select>
       </div>
 
       <div className="field-wrapper select-wrapper">

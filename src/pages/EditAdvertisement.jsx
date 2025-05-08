@@ -329,6 +329,16 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       </button>
 
       <div className={clsx('edit-data-container', { 'show-edit-data': editData })}>
+      <div className="field-wrapper select-wrapper">
+                <label htmlFor="country" className="field-label">Страна</label>
+        
+                <select name="country" id="country" value={country} onChange={(e) => setCountry(e.target.value)} className="select-field">
+                  {COUNTRIES.map((v) => (
+                    <option key={v} value={v}>{v}</option>
+                  ))}
+                </select>
+              </div>
+
         <div className="field-wrapper">
           <label htmlFor="name" className="field-label">Название тура</label>
 
@@ -346,16 +356,6 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
           <input type="number" id="count" className="text-field" value={count} onChange={(e) => setCount(e.target.value)} />
         </div>
-
-        <div className="field-wrapper select-wrapper">
-                <label htmlFor="country" className="field-label">Страна</label>
-        
-                <select name="country" id="country" value={country} onChange={(e) => setCountry(e.target.value)} className="select-field">
-                  {COUNTRIES.map((v) => (
-                    <option key={v} value={v}>{v}</option>
-                  ))}
-                </select>
-              </div>
 
         <div className="field-wrapper select-wrapper">
           <label htmlFor="tour-duration" className="field-label">Длительность</label>
