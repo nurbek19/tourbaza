@@ -12,7 +12,7 @@ import { DICTIONARY } from './CreateAdvertisement';
 import clsx from 'clsx';
 
 
-import { TOURS_DURATION, TOURS_TYPE, TOURS_DIFFICULTY, TOURS_DURATON_LABELS } from './CreateAdvertisement';
+import { TOURS_DURATION, TOURS_TYPE, TOURS_DIFFICULTY, TOURS_DURATON_LABELS, COUNTRIES } from './CreateAdvertisement';
 
 function EditAdvertisement({ doc, lang, onBackHandler }) {
   const [name, setName] = useState(doc.name);
@@ -23,38 +23,18 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
   const [difficulty, setTourDifficulty] = useState(doc.difficulty);
   const [description, setDescription] = useState(doc.description);
   const [location, setLocation] = useState(doc.location);
+  const [country, setCountry] = useState(doc.country);
 
-  // const [city, setCity] = useState(doc.city);
-  // const [address, setAddress] = useState(doc.address);
-  // const [price, setPrice] = useState({ ...doc.price });
-  // const [name, setName] = useState(doc.name ? doc.name : '');
   const [selected, setSelected] = useState([]);
   const [houses, setHouses] = useState([1]);
   const [calendarType, setCalendarType] = useState('book');
-  // const [count, setCount] = useState('');
-  // const [prepayment, setPrepayment] = useState(doc.prepayment_sum);
-  // const [paymentLink, setPaymentLink] = useState(doc.mbank_link);
-  // const [note, setNote] = useState('');
+  
   const [noteDate, setNoteDate] = useState('');
   const [editData, setEditData] = useState(false);
   // const [paymentId, setPaymentId] = useState(doc.finik_account_id);
   // const [houseType, setHouseType] = useState(doc.house_type);
   // const [description, setDescription] = useState(doc.description);
 
-  // const {
-  //   ref,
-  //   value: phone,
-  //   setValue,
-  // } = useIMask({ mask: '+{996}(000)000-000' });
-
-
-  // const priceChangeHandler = (name, value) => {
-  //   const copyObj = { ...price };
-
-  //   copyObj[name] = value;
-
-  //   setPrice(copyObj);
-  // }
 
   const onSendData = () => {
     const payload = {
@@ -67,7 +47,8 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       tour_type: tourType,
       difficulty,
       description,
-      location
+      location,
+      country
     };
 
     if (calendarType === 'book') {
@@ -131,6 +112,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       difficulty,
       description,
       location,
+      country,
 
       available_dates: selectedDays,
     };
@@ -144,14 +126,15 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       difficulty: doc.difficulty,
       description: doc.description,
       location: doc.location,
+      country: doc.country,
       available_dates: doc.available_dates,
     }
 
     const isObjectChanged = deepEqual(payload, docObj);
     const isSelectedDatesChanged = deepEqual(selectedDays, doc.available_dates);
 
-    return (name && price && count && tourDuration && tourType && difficulty && description && location && !isObjectChanged) || !isSelectedDatesChanged;
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, selected, doc]);
+    return (name && price && count && tourDuration && tourType && difficulty && description && location && country && !isObjectChanged) || !isSelectedDatesChanged;
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, selected, doc]);
 
   useEffect(() => {
     WebApp.onEvent('mainButtonClicked', onSendData);
@@ -159,7 +142,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     return () => {
       WebApp.offEvent('mainButtonClicked', onSendData);
     };
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, selected, doc]);
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, selected, doc]);
 
   useEffect(() => {
     WebApp.MainButton.text = 'Применить изменения';
@@ -363,6 +346,16 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
           <input type="number" id="count" className="text-field" value={count} onChange={(e) => setCount(e.target.value)} />
         </div>
+
+        <div className="field-wrapper select-wrapper">
+                <label htmlFor="country" className="field-label">Страна</label>
+        
+                <select name="country" id="country" value={country} onChange={(e) => setCountry(e.target.value)} className="select-field">
+                  {COUNTRIES.map((v) => (
+                    <option key={v} value={v}>{v}</option>
+                  ))}
+                </select>
+              </div>
 
         <div className="field-wrapper select-wrapper">
           <label htmlFor="tour-duration" className="field-label">Длительность</label>

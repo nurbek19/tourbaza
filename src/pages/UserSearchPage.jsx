@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { CITIES, HOUSE_TYPES } from './CreateAdvertisement';
+import { COUNTRIES, TOURS_TYPE } from './CreateAdvertisement';
 import WebApp from '@twa-dev/sdk';
 
-import { DICTIONARY } from './CreateAdvertisement';
 import SearchResultPage from './SearchResultPage';
 
 import { api } from '../api';
@@ -24,7 +23,7 @@ const UserSearchPage = () => {
     useEffect(() => {
         setLoading(true);
 
-        api.get(`/houses?city=${encodeURIComponent(city)}&house_type=${encodeURIComponent(houseType)}`).then((res) => {
+        api.get(`/tours?country=${encodeURIComponent(city)}&tour_type=${encodeURIComponent(houseType)}`).then((res) => {
             if (res.data) {
                 setData(res.data);
                 setIsData(false);
@@ -44,19 +43,19 @@ const UserSearchPage = () => {
     return (
         <div className='search-page'>
             <div className="field-wrapper select-wrapper">
-                <label htmlFor="city" className="field-label">{DICTIONARY[lang].city}</label>
+                <label htmlFor="city" className="field-label">Страна</label>
 
                 <select name="city" id="city" value={city} onChange={(e) => setCity(e.target.value)} className="select-field">
-                    <option value="all">Все города</option>
+                    <option value="all">Все страны</option>
 
-                    {CITIES.map((v) => (
+                    {COUNTRIES.map((v) => (
                         <option key={v} value={v}>{v}</option>
                     ))}
                 </select>
             </div>
 
             <div className="field-wrapper">
-                <span className="field-label">Выберите тип жилья:</span>
+                <span className="field-label">Выберите тип тура:</span>
 
                 <div className="house-type-buttons">
                     <label className="radio-input-label">
@@ -64,7 +63,7 @@ const UserSearchPage = () => {
                         <span className="radio-input-text">Все</span>
                     </label>
 
-                    {HOUSE_TYPES.map((type) => (
+                    {TOURS_TYPE.map((type) => (
                         <label className="radio-input-label" key={type}>
                             <input type="radio" name="houseType" value={type} className="radio-input" checked={houseType === type} onChange={(e) => setHouseType(e.target.value)} />
 

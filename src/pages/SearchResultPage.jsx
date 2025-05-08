@@ -6,27 +6,10 @@ import SingleAdvertisement from './SingleAdvertisement';
 
 import notFoundImage from '../images/image.png';
 
-import { DICTIONARY } from './CreateAdvertisement';
-import checkIcon from '../images/check-icon.png';
+import { DICTIONARY, TOURS_DURATON_LABELS } from './CreateAdvertisement';
 
 const SearchResultPage = ({ lang, data = [], loading, isData, itemIndex }) => {
     const [activeDoc, setActiveDoc] = useState(null);
-    // const [objIndex, setIndex] = useState(null);
-
-    // useEffect(() => {
-    //     let timeoutId;
-
-    //     if (itemIndex !== null) {
-    //         timeoutId = setTimeout(() => {
-    //             setIndex(itemIndex);
-    //         }, 2500);
-    //     } else {
-    //         clearTimeout(timeoutId);
-    //         setIndex(null);
-    //     }
-
-    //     return () => clearTimeout(timeoutId);
-    // }, [itemIndex]);
 
     if (loading) {
         return (
@@ -63,51 +46,20 @@ const SearchResultPage = ({ lang, data = [], loading, isData, itemIndex }) => {
                 <div className='card-list'>
                     {data.map((item, index) => (
                         <div key={item._id} className="card-container" onClick={() => setActiveDoc(item)}>
-                            <div className="card">
+                            <div className="card user-card">
                                 {item.photo_ids && (
                                     <div className='card-single-image-container'>
-                                        {/* <ImageSlider imageIds={item.photo_ids} /> */}
-
-                                        <img key={item.photo_ids[0]} src={`https://booklink.pro/bl/houses/photo?id=${item.photo_ids[0]}`} alt="house image" />
+                                        <img key={item.photo_ids[0]} src={`https://booklink.pro/tb/tours/photo?id=${item.photo_ids[0]}`} alt="house image" />
                                     </div>
                                 )}
-                                <div className="card-detail">
-                                    {item.house_type && (
-                                        <div className='house-type'>
-                                            {/* <img src={HOUSE_ICONS[item.house_type]} alt="house type icon" /> */}
-                                            {item.house_type}
-                                        </div>
-                                    )}
-
-                                    <div className='house-detail'>
-                                        <p className='house-name'>
-                                            <span>{item.name}</span>
-                                            {(item.mbank_link || item.finik_account_id) && (
-                                                <img src={checkIcon} alt="check icon" />
-                                            )}
-                                        </p>
-                                        <div>{item.city}</div>
+                                <div className="card-detail user-card-detail">
+                                    <div>
+                                        {item.name && (<p><span>{item.name}</span></p>)}
+                                        <p className="price-text">{`${item.tour_type} | ${item.duration_in_days + ' ' + TOURS_DURATON_LABELS[item.duration_in_days]} | ${item.difficulty}`}</p>
                                     </div>
 
-                                    <button className='search-button'>Забронировать</button>
-
-                                    {/* <p>
-                                        <a href={`https://2gis.kg/search/${encodeURIComponent(item.city + ' ' + item.address)}`} target='_blank'><span>📍</span> {item.city}, {item.address}</a>
-                                    </p> */}
-                                    {/* <p><span>{DICTIONARY[lang].shortRoomCount}:</span> {item.count}</p> */}
-                                    {/* <p><span>📞</span> {item.phone}</p> */}
-
-                                    {/* <div className="card-prices">
-                                        {Object.entries(item.price).map(([key, value]) => {
-                                            if (!value) {
-                                                return null;
-                                            }
-
-                                            return (
-                                                <div key={key}>{DICTIONARY[lang][key]} {value}</div>
-                                            );
-                                        })}
-                                    </div> */}
+                                    {/* <button className='search-button'>Подробнее</button> */}
+                                    <p><span>{item.price} сом</span></p>
                                 </div>
                             </div>
                         </div>
