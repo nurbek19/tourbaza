@@ -5,7 +5,7 @@ import WebApp from '@twa-dev/sdk';
 import SingleAdvertisement from './SingleAdvertisement';
 
 import { api } from "../api";
-import { TOURS_DURATON_LABELS } from './CreateAdvertisement';
+import { TOURS_DURATON_LABELS, TOURS_TYPE_ICONS } from './CreateAdvertisement';
 
 
 import '../App.css';
@@ -73,7 +73,7 @@ const PartnerPage = () => {
                                     </div>
 
                                     {/* <button className='search-button'>Подробнее</button> */}
-                                    <p><span>{item.price} сом</span> <i className='tour-type-icon'>{TOURS_TYPE_ICONS[item.tour_type]}</i></p>
+                                    <p className='card-price-icon'><span>{item.price} сом</span> <i className='tour-type-icon'>{TOURS_TYPE_ICONS[item.tour_type]}</i></p>
                                 </div>
                             </div>
                         </div>
