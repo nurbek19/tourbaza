@@ -455,7 +455,7 @@ input[type=number] {
 
 .manager-link {
   font-size: 18px;
-  color: var(--tg-theme-button-text-color);
+  color: var(--tg-theme-text-color);
   text-align: center;
 
   width: 100%;
