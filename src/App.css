@@ -830,6 +830,16 @@ input[type=number] {
   padding-bottom: 15px;
 }
 
+.company-name {
+  color: var(--tg-theme-text-color);
+  font-size: 18px;
+  font-weight: 600;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 15px;
+  margin: 0;
+}
+
 .calendar-type-buttons {
   display: flex;
 }
@@ -1317,4 +1327,14 @@ input[type=number] {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.card-price-icon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tour-type-icon {
+  font-size: 18px;
 }

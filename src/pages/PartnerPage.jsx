@@ -66,6 +66,7 @@ const PartnerPage = () => {
                                 )}
                                 <div className="card-detail user-card-detail">
                                     <div>
+                                    <p className="price-text">{item.company_name}</p>
                                     {item.name && (<p><span>{item.name}</span></p>)}
                                     <p className="price-text">{`${item.tour_type} | ${item.duration_in_days + ' ' + TOURS_DURATON_LABELS[item.duration_in_days]} | ${item.difficulty}`}</p>
                                     {/* <p className="price-text">{item?.price} сом</p> */}

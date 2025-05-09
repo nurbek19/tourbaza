@@ -6,7 +6,7 @@ import SingleAdvertisement from './SingleAdvertisement';
 
 import notFoundImage from '../images/image.png';
 
-import { DICTIONARY, TOURS_DURATON_LABELS } from './CreateAdvertisement';
+import { DICTIONARY, TOURS_DURATON_LABELS, TOURS_TYPE_ICONS } from './CreateAdvertisement';
 
 const SearchResultPage = ({ lang, data = [], loading, isData, itemIndex }) => {
     const [activeDoc, setActiveDoc] = useState(null);
@@ -54,12 +54,13 @@ const SearchResultPage = ({ lang, data = [], loading, isData, itemIndex }) => {
                                 )}
                                 <div className="card-detail user-card-detail">
                                     <div>
+                                        <p className="price-text">{item.company_name}</p>
                                         {item.name && (<p><span>{item.name}</span></p>)}
                                         <p className="price-text">{`${item.tour_type} | ${item.duration_in_days + ' ' + TOURS_DURATON_LABELS[item.duration_in_days]} | ${item.difficulty}`}</p>
                                     </div>
 
                                     {/* <button className='search-button'>Подробнее</button> */}
-                                    <p><span>{item.price} сом</span></p>
+                                    <p className='card-price-icon'><span>{item.price} сом</span> <i className='tour-type-icon'>{TOURS_TYPE_ICONS[item.tour_type]}</i></p>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import WebApp from '@twa-dev/sdk';
 import { useSearchParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHorse, faPersonWalking, faCarSide, faRestroom, faSnowflake, faCampground, faPersonSkiing, faPersonBiking, faWater, faPeopleRoof } from '@fortawesome/free-solid-svg-icons';
 
 import '../App.css';
 
@@ -88,7 +90,20 @@ export const TOURS_DURATON_LABELS = {
   5: 'дней',
 }
 
-export const COUNTRIES = ['Кыргызстан', 'Казахстан', 'Узбекистан'] 
+export const COUNTRIES = ['Кыргызстан', 'Казахстан', 'Узбекистан'];
+
+export const TOURS_TYPE_ICONS = {
+  'Пеший': <FontAwesomeIcon icon={faPersonWalking} />,
+  'Конный': <FontAwesomeIcon icon={faHorse} />,
+  'Авто': <FontAwesomeIcon icon={faCarSide} />,
+  'Культурный': <FontAwesomeIcon icon={faRestroom} />,
+  'Зимний': <FontAwesomeIcon icon={faSnowflake} />,
+  'Кемпинг': <FontAwesomeIcon icon={faCampground} />,
+  'Экстримальный': <FontAwesomeIcon icon={faPersonSkiing} />,
+  'Велотур': <FontAwesomeIcon icon={faPersonBiking} />,
+  'Водный тур': <FontAwesomeIcon icon={faWater} />,
+  'Семейный': <FontAwesomeIcon icon={faPeopleRoof} />
+};
 
 function CreateAdvertisement() {
   const [name, setName] = useState('');

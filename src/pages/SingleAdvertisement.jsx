@@ -187,9 +187,13 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                 <div className='search-container'>
                     <div className="back-button back-button-padding" onClick={onBackHandler}>« {DICTIONARY[lang].back}</div>
                     <div className={clsx('single-result-card')}>
-                        {/* { 'card-padding': selected } */}
+                        
                         <div className="">
                             <div className="single-card">
+                            <p className="company-name">
+                                        {item.company_name}
+                                    </p>
+
                                 {item.photo_ids && (
                                     <ImageSlider imageIds={item.photo_ids} />
                                 )}
