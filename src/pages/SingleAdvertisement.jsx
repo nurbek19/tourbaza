@@ -252,6 +252,8 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                         {item.location}
                                     </p>
 
+                                    <a href={`https://t.me/@id${item.owner_id}`} className='manager-link'>Написать менеджеру</a>
+
                                     {/* <div className='book-calendar'>
                                 <p>{DICTIONARY[lang].bookLabel}:</p>
                                 <div className="field-wrapper">
