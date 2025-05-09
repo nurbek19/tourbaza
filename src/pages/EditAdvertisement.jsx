@@ -24,11 +24,12 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
   const [description, setDescription] = useState(doc.description);
   const [location, setLocation] = useState(doc.location);
   const [country, setCountry] = useState(doc.country);
+  const [companyName, setCompanyName] = useState(doc.company_name);
 
   const [selected, setSelected] = useState([]);
   const [houses, setHouses] = useState([1]);
   const [calendarType, setCalendarType] = useState('book');
-  
+
   const [noteDate, setNoteDate] = useState('');
   const [editData, setEditData] = useState(false);
   // const [paymentId, setPaymentId] = useState(doc.finik_account_id);
@@ -48,7 +49,8 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       difficulty,
       description,
       location,
-      country
+      country,
+      company_name: companyName,
     };
 
     if (calendarType === 'book') {
@@ -113,6 +115,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       description,
       location,
       country,
+      company_name: companyName,
 
       available_dates: selectedDays,
     };
@@ -127,14 +130,15 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       description: doc.description,
       location: doc.location,
       country: doc.country,
+      company_name: doc.company_name,
       available_dates: doc.available_dates,
     }
 
     const isObjectChanged = deepEqual(payload, docObj);
     const isSelectedDatesChanged = deepEqual(selectedDays, doc.available_dates);
 
-    return (name && price && count && tourDuration && tourType && difficulty && description && location && country && !isObjectChanged) || !isSelectedDatesChanged;
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, selected, doc]);
+    return (name && price && count && tourDuration && tourType && difficulty && description && location && country && companyName && !isObjectChanged) || !isSelectedDatesChanged;
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, companyName, selected, doc]);
 
   useEffect(() => {
     WebApp.onEvent('mainButtonClicked', onSendData);
@@ -142,7 +146,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     return () => {
       WebApp.offEvent('mainButtonClicked', onSendData);
     };
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, selected, doc]);
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, companyName, selected, doc]);
 
   useEffect(() => {
     WebApp.MainButton.text = 'Применить изменения';
@@ -329,15 +333,21 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       </button>
 
       <div className={clsx('edit-data-container', { 'show-edit-data': editData })}>
-      <div className="field-wrapper select-wrapper">
-                <label htmlFor="country" className="field-label">Страна</label>
-        
-                <select name="country" id="country" value={country} onChange={(e) => setCountry(e.target.value)} className="select-field">
-                  {COUNTRIES.map((v) => (
-                    <option key={v} value={v}>{v}</option>
-                  ))}
-                </select>
-              </div>
+        <div className="field-wrapper select-wrapper">
+          <label htmlFor="country" className="field-label">Страна</label>
+
+          <select name="country" id="country" value={country} onChange={(e) => setCountry(e.target.value)} className="select-field">
+            {COUNTRIES.map((v) => (
+              <option key={v} value={v}>{v}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="field-wrapper">
+          <label htmlFor="company-name" className="field-label">Название компании</label>
+
+          <input type="text" id="company-name" className="text-field" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+        </div>
 
         <div className="field-wrapper">
           <label htmlFor="name" className="field-label">Название тура</label>

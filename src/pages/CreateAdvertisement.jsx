@@ -100,6 +100,7 @@ function CreateAdvertisement() {
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
   const [country, setCountry] = useState(COUNTRIES[0]);
+  const [companyName, setCompanyName] = useState('');
 
   const [searchParams] = useSearchParams();
   const [lang, setLang] = useState('ru');
@@ -114,13 +115,14 @@ function CreateAdvertisement() {
       difficulty,
       description,
       location,
-      country
+      country,
+      company_name: companyName,
     };
 
     console.log(payload);
 
     WebApp.sendData(JSON.stringify(payload));
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country]);
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, companyName]);
 
   useEffect(() => {
     WebApp.expand();
@@ -136,11 +138,11 @@ function CreateAdvertisement() {
   }, []);
 
   const isFormValid = useMemo(() => {
-    const valid = name && price && count && tourDuration && tourType && difficulty && description && location && country;
+    const valid = name && price && count && tourDuration && tourType && difficulty && description && location && country && companyName;
 
     return valid;
 
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country]);
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, companyName]);
 
   useEffect(() => {
     WebApp.onEvent('mainButtonClicked', onSendData);
@@ -149,7 +151,7 @@ function CreateAdvertisement() {
     return () => {
       WebApp.offEvent('mainButtonClicked', onSendData);
     };
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country]);
+  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, companyName]);
 
   useEffect(() => {
     WebApp.MainButton.text = 'Создать тур';
@@ -177,6 +179,12 @@ function CreateAdvertisement() {
             <option key={v} value={v}>{v}</option>
           ))}
         </select>
+      </div>
+
+      <div className="field-wrapper">
+        <label htmlFor="company-name" className="field-label">Название компании</label>
+
+        <input type="text" id="company-name" className="text-field" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
       </div>
 
       <div className="field-wrapper">
