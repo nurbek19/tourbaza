@@ -439,8 +439,7 @@ input[type=number] {
   z-index: 9;
 }
 
-.search-button,
-.manager-link {
+.search-button {
   background-color: var(--tg-theme-button-color);
   /* background-color: blue; */
 
@@ -455,6 +454,15 @@ input[type=number] {
 }
 
 .manager-link {
+  font-size: 18px;
+  color: var(--tg-theme-button-text-color);
+  text-align: center;
+
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--tg-theme-button-color);
+  border-radius: 8px;
+
   display: block;
   box-sizing: border-box;
   margin-top: 20px;

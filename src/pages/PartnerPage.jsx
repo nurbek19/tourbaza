@@ -73,7 +73,7 @@ const PartnerPage = () => {
                                     </div>
 
                                     {/* <button className='search-button'>Подробнее</button> */}
-                                    <p><span>{item.price} сом</span></p>
+                                    <p><span>{item.price} сом</span> <i className='tour-type-icon'>{TOURS_TYPE_ICONS[item.tour_type]}</i></p>
                                 </div>
                             </div>
                         </div>
