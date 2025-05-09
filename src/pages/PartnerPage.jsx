@@ -54,6 +54,11 @@ const PartnerPage = () => {
                 </div>
             ) : (
                 <div className='card-list'>
+                    {data && (
+                        <p className="company-name">
+                            {data[0]?.company_name}
+                        </p>
+                    )}
                     {data.map((item) => (
                         <div key={item._id} className="card-container" onClick={() => setActiveDoc(item)}>
                             <div className="card user-card">
