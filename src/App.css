@@ -1343,6 +1343,7 @@ input[type=number] {
   align-items: center;
 }
 
-.tour-type-icon {
-  font-size: 18px;
+.tour-type-icon svg {
+  width: 25px;
+  height: auto;
 }
