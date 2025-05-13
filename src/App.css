@@ -1100,7 +1100,7 @@ input[type=number] {
   padding: 4px 15px;
   border-radius: 4px;
   color: var(--tg-theme-button-text-color);
-
+  text-align: center;
 }
 
 .address-link-wrapper {
@@ -1271,7 +1271,7 @@ input[type=number] {
 }
 
 .user-card {
-  align-items: stretch;
+  /* align-items: stretch; */
 }
 
 .back-button-padding {

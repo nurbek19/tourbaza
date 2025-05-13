@@ -3,6 +3,7 @@
 .expandable-text {
     line-height: 1.5;             /* adjust to your design */
     position: relative;
+    word-break: break-all;
   }
   
   .expandable-text.collapsed {
