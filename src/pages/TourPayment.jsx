@@ -85,7 +85,8 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
             if (res.data) {
                 WebApp.MainButton.hide();
                 // window.location.href = res.data.url;
-                WebApp.openLink(res.data.url)
+                WebApp.openLink(res.data.url);
+                WebApp.close();
             }
         }).catch((err) => {
             console.log(err);
