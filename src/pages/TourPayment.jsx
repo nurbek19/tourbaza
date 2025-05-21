@@ -70,6 +70,13 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
             people_count: amount,
         });
 
+        console.log(JSON.stringify({
+            tour_id: item._id,
+            books,
+            comment: `${name} ${phone}`,
+            people_count: amount,
+        }));
+
 
         const price = item.price * parseInt(amount);
         const requester_id = searchParams.get('requester_id');
