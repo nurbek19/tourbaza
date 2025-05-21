@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import WebApp from '@twa-dev/sdk';
 import { DayPicker } from "react-day-picker";
-import { format, compareAsc, addDays, isBefore } from "date-fns";
+import { format, compareAsc, addDays, isBefore, startOfDay } from "date-fns";
 import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -153,20 +153,30 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
             return true;
         }
 
-        if (availableDates.length === 1) {
+        const today = startOfDay(new Date());
+
+        const futureDates = availableDates.filter(date => !isBefore(date, today));
+
+        if (!futureDates.length) {
+            return true;
+        }
+
+
+        if (futureDates.length === 1) {
             return {
-                before: new Date(availableDates[0]),
-                after: new Date(availableDates[0]),
+                before: new Date(futureDates[0]),
+                after: new Date(futureDates[0]),
             }
         }
 
-        const sortedDates = availableDates.map(date => new Date(date)).sort(compareAsc);
+        const sortedDates = futureDates.map(date => new Date(date)).sort(compareAsc);
         const missingDates = getMissingDates(sortedDates);
+        console.log(sortedDates, 'Nurbek', futureDates, missingDates);
 
         if (!missingDates.length) {
             return {
                 before: sortedDates[0],
-                after: sortedDates[1]
+                after: sortedDates[sortedDates.length - 1]
             }
         }
 
@@ -186,8 +196,14 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
         if (item.available_dates?.length) {
             const sortedDates = item.available_dates.map((d) => (new Date(d))).sort(compareAsc);
 
-            handleSelect(sortedDates[0]);
-            return format(sortedDates[0], 'dd/MM/yyyy')
+            const today = startOfDay(new Date());
+
+            const futureDates = sortedDates.filter(date => !isBefore(date, today));
+
+            if (futureDates?.length) {
+                handleSelect(futureDates[0]);
+                return format(futureDates[0], 'dd/MM/yyyy');
+            }
         }
 
         return '';
