@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import WebApp from '@twa-dev/sdk';
 import { DayPicker } from "react-day-picker";
-import { format, compareAsc, addDays, isBefore, startOfDay } from "date-fns";
+import { format, compareAsc, addDays, isBefore, startOfDay, isAfter } from "date-fns";
 import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -155,7 +155,7 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
 
         const today = startOfDay(new Date());
 
-        const futureDates = availableDates.filter(date => !isBefore(date, today));
+        const futureDates = availableDates.filter(date => isAfter(date, today));
 
         if (!futureDates.length) {
             return true;
@@ -198,7 +198,7 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
 
             const today = startOfDay(new Date());
 
-            const futureDates = sortedDates.filter(date => !isBefore(date, today));
+            const futureDates = sortedDates.filter(date => isAfter(date, today));
 
             if (futureDates?.length) {
                 handleSelect(futureDates[0]);
