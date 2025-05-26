@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import WebApp from '@twa-dev/sdk';
 import { DayPicker } from "react-day-picker";
-import { format, compareAsc, addDays, isBefore, startOfDay, isAfter } from "date-fns";
+import { format, compareAsc, addDays, isBefore, startOfDay, isAfter, isSameDay } from "date-fns";
 import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -153,9 +153,23 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
             return true;
         }
 
+        const now = new Date();
         const today = startOfDay(new Date());
 
-        const futureDates = availableDates.filter(date => isAfter(date, today));
+        const tomorrow = startOfDay(addDays(now, 1));
+        const sixPM = new Date(today);
+        sixPM.setHours(18, 0, 0, 0);
+
+        const excludeTomorrow = now > sixPM;
+
+        const futureDates = availableDates.filter(date => {
+            if (isSameDay(date, today)) return false;
+
+            if (excludeTomorrow && isSameDay(date, tomorrow)) return false; //в будущем добавить проверку существует ли дата на завтра
+
+
+            return isAfter(date, today);
+        });
 
         if (!futureDates.length) {
             return true;
@@ -196,9 +210,22 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
         if (item.available_dates?.length) {
             const sortedDates = item.available_dates.map((d) => (new Date(d))).sort(compareAsc);
 
+            const now = new Date();
             const today = startOfDay(new Date());
 
-            const futureDates = sortedDates.filter(date => isAfter(date, today));
+            const tomorrow = startOfDay(addDays(now, 1));
+            const sixPM = new Date(today);
+            sixPM.setHours(18, 0, 0, 0);
+
+            const excludeTomorrow = now > sixPM;
+
+            const futureDates = sortedDates.filter(date => {
+                if (isSameDay(date, today)) return false;
+
+                if (excludeTomorrow && isSameDay(date, tomorrow)) return false; //в будущем добавить проверку существует ли дата на завтра
+
+                return isAfter(date, today);
+            });
 
             if (futureDates?.length) {
                 handleSelect(futureDates[0]);
@@ -216,10 +243,10 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
             <div className="tour-payment">
                 {/* <div className='book-calendar'>
                     <p>{DICTIONARY[lang].bookLabel}:</p> */}
-                    <div className="field-wrapper">
-                        <label htmlFor="date" className="field-label">Выберите дату для покупки</label>
-                        <input type="text" id="date" placeholder='Выбрать дату' value={inputValue} className="text-field" readOnly={true} onFocus={() => setOpen(true)} />
-                    </div>
+                <div className="field-wrapper">
+                    <label htmlFor="date" className="field-label">Выберите дату для покупки</label>
+                    <input type="text" id="date" placeholder='Выбрать дату' value={inputValue} className="text-field" readOnly={true} onFocus={() => setOpen(true)} />
+                </div>
                 {/* </div> */}
 
 
@@ -264,8 +291,8 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
                     <span>{item.price * parseInt(amount)} сом</span>
                 </div>
                 <div className="one-person-sum">
-                <p>За одного участника</p>
-                <span>{item.price} сом</span>
+                    <p>За одного участника</p>
+                    <span>{item.price} сом</span>
                 </div>
 
 
