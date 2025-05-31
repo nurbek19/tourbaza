@@ -1263,6 +1263,7 @@ input[type=number] {
 .card-detail .price-text {
   color: var(--tg-theme-subtitle-text-color);
   font-size: 12px;
+  font-weight: 400;
 }
 
 .user-card-detail {
