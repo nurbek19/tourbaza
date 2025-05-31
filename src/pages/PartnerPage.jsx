@@ -122,8 +122,10 @@ const PartnerPage = () => {
     
                                         {/* <button className='search-button'>Подробнее</button> */}
                                         <p className='card-price-icon'>
-                                            <span>{item.price} сом</span>
+                                            <span>{item.price} сом
                                             <span className='price-text'> {recentDays.map((d) => (format(new Date(d), 'd MMM', { locale: ru }))).join(', ')}</span>
+                                            </span>
+                                            
                                             <i className='tour-type-icon'>{TOURS_TYPE_ICONS[item.tour_type]}</i>
                                             </p>
                                     </div>

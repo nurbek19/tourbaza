@@ -1273,7 +1273,7 @@ input[type=number] {
 }
 
 .user-card {
-  /* align-items: stretch; */
+  align-items: stretch;
 }
 
 .back-button-padding {
@@ -1343,6 +1343,10 @@ input[type=number] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.card-detail .card-price-icon {
+  padding-bottom: 0;
 }
 
 .tour-type-icon svg {
