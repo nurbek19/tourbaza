@@ -1,7 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
 
-import { useSearchParams } from 'react-router-dom';
-// import "react-day-picker/style.css";
 import ImageSlider from "../components/ImageSlider";
 import AnimatedBottomButton from './AnimatedBottomButton';
 import '../App.css';
@@ -16,9 +14,7 @@ import { TOURS_DURATON_LABELS } from './CreateAdvertisement';
 import TourPayment from './TourPayment';
 
 const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
-    const [searchParams] = useSearchParams();
     const [isPayment, setPaymentPage] = useState(false);
-    const userName = searchParams.get('nick_name') ?? '';
 
 
     return (
@@ -98,7 +94,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                         {item.location}
                                     </p>
 
-                                    <a href={`https://t.me/${userName}`} className='manager-link'>Написать менеджеру</a>
+                                    <a href={`https://t.me/${item.nick_name ?? ''}`} className='manager-link'>Написать менеджеру</a>
 
                                     {/* <div className='book-calendar'>
                                 <p>{DICTIONARY[lang].bookLabel}:</p>
