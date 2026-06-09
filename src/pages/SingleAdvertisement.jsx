@@ -39,7 +39,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                     <p className="bold-title">
                                         {item.name}
 
-                                        <span className='price-label'>{item.price} сом{item.price_weekend > 0 ? ` / ${item.price_weekend}` : ''}</span>
+                                        <span className='price-label'>{item.price} сом{item.price_weekend > 0 ? ` / ${item.price_weekend} сом` : ''}</span>
                                     </p>
 
                                     <div className='tour-details'>
