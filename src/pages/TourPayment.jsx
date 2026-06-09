@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import WebApp from '@twa-dev/sdk';
 import { DayPicker } from "react-day-picker";
-import { format, compareAsc, addDays, isBefore, startOfDay, isAfter, isSameDay } from "date-fns";
+import { format, compareAsc, addDays, isBefore, startOfDay, isAfter, isSameDay, isWeekend } from "date-fns";
 import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -39,6 +39,8 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
     const [amount, setAmount] = useState(1);
 
     const [searchParams] = useSearchParams();
+    
+    const rate = (item.price_weekend > 0 && selected && isWeekend(selected)) ? item.price_weekend : item.price;
 
     // const [value, setValue] = useState(1);
 
@@ -78,7 +80,7 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
         }));
 
 
-        const price = item.price * parseInt(amount);
+        const price = rate * parseInt(amount);
         const requester_id = searchParams.get('requester_id');
         WebApp.MainButton.showProgress();
         api.post('/payment', {
@@ -288,11 +290,11 @@ const TourPayment = ({ item, onBackHandler, lang }) => {
 
                 <div className="total-sum">
                     <p>Сумма к оплате</p>
-                    <span>{item.price * parseInt(amount)} сом</span>
+                    <span>{rate * parseInt(amount)} сом</span>
                 </div>
                 <div className="one-person-sum">
-                    <p>За одного участника</p>
-                    <span>{item.price} сом</span>
+                    <p>За одного участника{selected && isWeekend(selected) ? ' (выходной)' : ''}</p>
+                    <span>{rate} сом</span>
                 </div>
 
 

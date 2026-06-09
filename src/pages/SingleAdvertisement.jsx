@@ -39,7 +39,7 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                     <p className="bold-title">
                                         {item.name}
 
-                                        <span className='price-label'>{item.price} сом</span>
+                                        <span className='price-label'>{item.price} сом{item.price_weekend > 0 ? ` / ${item.price_weekend}` : ''}</span>
                                     </p>
 
                                     <div className='tour-details'>
@@ -66,10 +66,17 @@ const SingleAdvertisement = ({ item, lang, onBackHandler, hideButton }) => {
                                         </div>
 
                                         <div className='tour-detail'>
-                                            <span>Стоимость за человека</span>
+                                            <span>Стоимость за человека{item.price_weekend > 0 ? ' (будни)' : ''}</span>
                                             {/* <span className="dots"></span> */}
                                             <p>{item.price} сом</p>
                                         </div>
+
+                                        {item.price_weekend > 0 && (
+                                            <div className='tour-detail'>
+                                                <span>Стоимость за человека (выходные)</span>
+                                                <p>{item.price_weekend} сом</p>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {item.description && (

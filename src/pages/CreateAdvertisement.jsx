@@ -183,6 +183,7 @@ export const TOURS_TYPE_ICONS = {
 function CreateAdvertisement() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
+  const [priceWeekend, setPriceWeekend] = useState('');
   const [count, setCount] = useState('');
   const [tourDuration, setTourDuration] = useState(TOURS_DURATION[0]);
   const [tourType, setTourType] = useState(TOURS_TYPE[0]);
@@ -199,6 +200,7 @@ function CreateAdvertisement() {
     const payload = {
       name,
       price: parseInt(price),
+      price_weekend: parseInt(priceWeekend) || 0,
       people_limit: parseInt(count),
       duration_in_days: parseInt(tourDuration),
       tour_type: tourType,
@@ -212,7 +214,7 @@ function CreateAdvertisement() {
     console.log(payload);
 
     WebApp.sendData(JSON.stringify(payload));
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, companyName]);
+  }, [name, price, priceWeekend, count, tourDuration, tourType, difficulty, description, location, country, companyName]);
 
   useEffect(() => {
     WebApp.expand();
@@ -241,7 +243,7 @@ function CreateAdvertisement() {
     return () => {
       WebApp.offEvent('mainButtonClicked', onSendData);
     };
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, companyName]);
+  }, [name, price, priceWeekend, count, tourDuration, tourType, difficulty, description, location, country, companyName]);
 
   useEffect(() => {
     WebApp.MainButton.text = 'Создать тур';
@@ -284,9 +286,15 @@ function CreateAdvertisement() {
       </div>
 
       <div className="field-wrapper">
-        <label htmlFor="price" className="field-label">Стоимость тура</label>
+        <label htmlFor="price" className="field-label">Стоимость тура (будни)</label>
 
         <input type="number" id="price" pattern="[0-9]*" inputMode="numeric" className="text-field" value={price} onChange={(e) => setPrice(e.target.value)} />
+      </div>
+
+      <div className="field-wrapper">
+        <label htmlFor="price-weekend" className="field-label">Стоимость тура (выходные)</label>
+
+        <input type="number" id="price-weekend" pattern="[0-9]*" inputMode="numeric" className="text-field" value={priceWeekend} onChange={(e) => setPriceWeekend(e.target.value)} placeholder="Если пусто — как в будни" />
       </div>
 
       <div className="field-wrapper">

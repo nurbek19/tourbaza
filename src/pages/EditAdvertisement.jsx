@@ -17,6 +17,7 @@ import { TOURS_DURATION, TOURS_TYPE, TOURS_DIFFICULTY, TOURS_DURATON_LABELS, COU
 function EditAdvertisement({ doc, lang, onBackHandler }) {
   const [name, setName] = useState(doc.name);
   const [price, setPrice] = useState(doc.price);
+  const [priceWeekend, setPriceWeekend] = useState(doc.price_weekend || '');
   const [count, setCount] = useState(doc.people_limit);
   const [tourDuration, setTourDuration] = useState(doc.duration_in_days);
   const [tourType, setTourType] = useState(doc.tour_type);
@@ -43,6 +44,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
       name,
       price: parseInt(price),
+      price_weekend: parseInt(priceWeekend) || 0,
       people_limit: parseInt(count),
       duration_in_days: parseInt(tourDuration),
       tour_type: tourType,
@@ -108,6 +110,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     const payload = {
       name,
       price: parseInt(price),
+      price_weekend: parseInt(priceWeekend) || 0,
       people_limit: parseInt(count),
       duration_in_days: parseInt(tourDuration),
       tour_type: tourType,
@@ -123,6 +126,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     const docObj = {
       name: doc.name,
       price: parseInt(doc.price),
+      price_weekend: doc.price_weekend || 0,
       people_limit: parseInt(doc.people_limit),
       duration_in_days: doc.duration_in_days,
       tour_type: doc.tour_type,
@@ -138,7 +142,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     const isSelectedDatesChanged = deepEqual(selectedDays, doc.available_dates);
 
     return (name && price && count && tourDuration && tourType && difficulty && description && location && country && companyName && !isObjectChanged) || !isSelectedDatesChanged;
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, companyName, selected, doc]);
+  }, [name, price, priceWeekend, count, tourDuration, tourType, difficulty, description, location, country, companyName, selected, doc]);
 
   useEffect(() => {
     WebApp.onEvent('mainButtonClicked', onSendData);
@@ -146,7 +150,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
     return () => {
       WebApp.offEvent('mainButtonClicked', onSendData);
     };
-  }, [name, price, count, tourDuration, tourType, difficulty, description, location, country, companyName, selected, doc]);
+  }, [name, price, priceWeekend, count, tourDuration, tourType, difficulty, description, location, country, companyName, selected, doc]);
 
   useEffect(() => {
     WebApp.MainButton.text = 'Применить изменения';
@@ -356,9 +360,15 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
         </div>
 
         <div className="field-wrapper">
-          <label htmlFor="price" className="field-label">Стоимость тура</label>
+          <label htmlFor="price" className="field-label">Стоимость тура (будни)</label>
 
           <input type="number" id="price" pattern="[0-9]*" inputMode="numeric" className="text-field" value={price} onChange={(e) => setPrice(e.target.value)} />
+        </div>
+
+        <div className="field-wrapper">
+          <label htmlFor="price-weekend" className="field-label">Стоимость тура (выходные)</label>
+
+          <input type="number" id="price-weekend" pattern="[0-9]*" inputMode="numeric" className="text-field" value={priceWeekend} onChange={(e) => setPriceWeekend(e.target.value)} placeholder="Если пусто — как в будни" />
         </div>
 
         <div className="field-wrapper">
