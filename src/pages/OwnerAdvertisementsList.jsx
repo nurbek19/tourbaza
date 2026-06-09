@@ -52,9 +52,6 @@ function OwnerAdvertisementsList() {
         setDocStatus((prev) => ({ ...prev, [docId]: checked }));
     };
 
-    // Tours whose toggle differs from the backend value. A missing local status
-    // (before the toggle is touched) is treated as unchanged, and `active` is
-    // always a real boolean — never undefined in the payload.
     const changedStatuses = useMemo(
         () => data
             .filter((item) => (docStatuses[item._id] ?? item.active) !== item.active)
@@ -66,13 +63,10 @@ function OwnerAdvertisementsList() {
         WebApp.sendData(JSON.stringify(changedStatuses));
     }, [changedStatuses]);
 
-    // Show "Обновить статусы" only when something changed; send the diff on tap.
-    // While the edit form is open, EditAdvertisement owns the MainButton, so we
-    // stand down (and drop our click handler so it can't also fire). hide() is
-    // intentionally NOT in this cleanup — that would flicker the button on every
-    // toggle; it's handled by the unmount-only effect below.
     useEffect(() => {
-        if (!editDoc) {
+        if (editDoc) {
+            WebApp.MainButton.hide();
+        } else {
             WebApp.MainButton.text = 'Обновить статусы';
             if (changedStatuses.length > 0) {
                 WebApp.MainButton.show();
@@ -84,7 +78,6 @@ function OwnerAdvertisementsList() {
         return () => WebApp.offEvent('mainButtonClicked', onSendData);
     }, [changedStatuses, onSendData, editDoc]);
 
-    // Hide the button only when leaving the screen (not on each toggle).
     useEffect(() => () => WebApp.MainButton.hide(), []);
 
     return (
@@ -110,6 +103,7 @@ function OwnerAdvertisementsList() {
                                     <label className="switch" onClick={(e) => e.stopPropagation()}>
                                         <input
                                             type="checkbox"
+                                            aria-label={`Активность тура${item.name ? ` «${item.name}»` : ''}`}
                                             checked={docStatuses[item._id] ?? item.active}
                                             onChange={(e) => statusChangeHandler(e, item._id)}
                                         />
