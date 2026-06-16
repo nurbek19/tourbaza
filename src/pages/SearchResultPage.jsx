@@ -102,7 +102,7 @@ const SearchResultPage = ({ lang, data = [], loading, isData, itemIndex }) => {
                                         {/* <button className='search-button'>Подробнее</button> */}
                                         <p className='card-price-icon'>
                                             <span>
-                                                {item.price} сом
+                                                {item.price} сом{item.price_weekend > 0 ? ` / вых. ${item.price_weekend} сом` : ''}
                                                 <span className='price-text'> {recentDays.map((d) => (format(new Date(d), 'd MMM', { locale: ru }))).join(', ')}</span>
                                             </span>
                                             <i className='tour-type-icon'>{TOURS_TYPE_ICONS[item.tour_type]}</i>

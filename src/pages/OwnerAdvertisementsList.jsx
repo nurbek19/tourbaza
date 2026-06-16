@@ -156,7 +156,7 @@ function OwnerAdvertisementsList() {
                                 )}
                                 <div className="card-detail">
                                     {item.name && (<p><span>{item.name}</span></p>)}
-                                    <p>{item?.price} сом</p>
+                                    <p>{item?.price} сом{item?.price_weekend > 0 ? ` / вых. ${item.price_weekend} сом` : ''}</p>
                                     {/* <p><span>📍</span> {item.city}, {item.address}</p> */}
                                     {/* <div className="card-actions-wrapper"> */}
                                         {/* <div className="card-actions"> */}
