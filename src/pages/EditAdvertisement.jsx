@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import WebApp from '@twa-dev/sdk';
 import { DayPicker } from "react-day-picker";
-import { format, isAfter, sub } from "date-fns";
+import { format, isAfter, sub, startOfDay, isBefore } from "date-fns";
 import "react-day-picker/style.css";
 import { ru } from "react-day-picker/locale";
 import deepEqual from 'deep-equal';
@@ -39,9 +39,12 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
 
 
   const onSendData = () => {
-    const payload = {
-      _id: doc._id,
+    const today = startOfDay(new Date());
+    const availableDates = selected
+      .filter((d) => !isBefore(d, today))
+      .map((d) => format(d, 'MM/dd/yyyy'));
 
+    const params = {
       name,
       price: parseInt(price),
       price_weekend: parseInt(priceWeekend) || 0,
@@ -55,42 +58,31 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       company_name: companyName,
     };
 
-    if (calendarType === 'book') {
-      // const booksCopy = {};
+    const docParams = {
+      name: doc.name,
+      price: parseInt(doc.price),
+      price_weekend: doc.price_weekend || 0,
+      people_limit: parseInt(doc.people_limit),
+      duration_in_days: parseInt(doc.duration_in_days),
+      tour_type: doc.tour_type,
+      difficulty: doc.difficulty,
+      description: doc.description,
+      location: doc.location,
+      country: doc.country,
+      company_name: doc.company_name,
+    };
 
-      const selectedDates = selected.map((date) => (format(date, 'MM/dd/yyyy')));
+    const paramsChanged = !deepEqual(params, docParams);
+    const datesChanged = !deepEqual(availableDates, doc.available_dates ?? []);
 
-      // houses.forEach((value) => {
-      //   booksCopy[value] = [...selectedDates];
-      // });
-
-
-      payload.available_dates = selectedDates;
+    let payload;
+    if (paramsChanged && datesChanged) {
+      payload = { _id: doc._id, ...params, available_dates: availableDates };
+    } else if (paramsChanged) {
+      payload = { _id: doc._id, ...params };
+    } else {
+      payload = { _id: doc._id, available_dates: availableDates };
     }
-    // else if (calendarType === 'delete') {
-    //   const booksCopy = {};
-
-    //   const selectedDates = selected.map((date) => format(date, 'MM/dd/yyyy'));
-
-    //   houses.forEach((value) => {
-    //     // booksCopy[value] = [...selectedDates];
-
-    //     booksCopy[value] = [...doc.books[value]].reduce((acc, obj) => {
-    //       if (!selectedDates.includes(obj.book_date)) {
-    //         acc.push(obj);
-    //       }
-
-    //       return acc;
-    //     }, []);
-    //   });
-
-
-    //   payload.books = booksCopy;
-    //   payload.delete_books = true;
-    // }
-
-    console.log(JSON.stringify(payload));
-    console.log(payload);
 
     WebApp.sendData(JSON.stringify(payload));
   };
@@ -128,7 +120,7 @@ function EditAdvertisement({ doc, lang, onBackHandler }) {
       price: parseInt(doc.price),
       price_weekend: doc.price_weekend || 0,
       people_limit: parseInt(doc.people_limit),
-      duration_in_days: doc.duration_in_days,
+      duration_in_days: parseInt(doc.duration_in_days),
       tour_type: doc.tour_type,
       difficulty: doc.difficulty,
       description: doc.description,
