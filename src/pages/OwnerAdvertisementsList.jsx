@@ -64,9 +64,7 @@ function OwnerAdvertisementsList() {
     }, [changedStatuses]);
 
     useEffect(() => {
-        if (editDoc) {
-            WebApp.MainButton.hide();
-        } else {
+        if (!editDoc) {
             WebApp.MainButton.text = 'Обновить статусы';
             if (changedStatuses.length > 0) {
                 WebApp.MainButton.show();
