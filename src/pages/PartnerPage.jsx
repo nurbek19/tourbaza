@@ -62,7 +62,7 @@ const PartnerPage = () => {
 
         api.get(`/tours?owner_id=${id}`).then((res) => {
             if (res.data) {
-                setData(res.data);
+                setData(res.data.filter((t) => t.active !== false));
 
                 // if (res.data.length === 1) {
                 //     setActiveDoc(res.data[0])
